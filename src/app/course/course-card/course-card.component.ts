@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Course } from './../course';
 
 @Component({
   selector: 'fa-course-card',
@@ -8,7 +9,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class CourseCardComponent implements OnInit {
 
   @Input()
-  course : any;
+  course : Course;
 
   constructor() { }
 
@@ -16,7 +17,7 @@ export class CourseCardComponent implements OnInit {
     
   }
 
-  getCourseFriendlyURL() : void {
+  getCourseFriendlyURL() : string {
     return this.course.title.replace(/ /g, "-");
   }
 

@@ -18,6 +18,7 @@ import { FooterComponent } from './footer/footer.component';
 import { CourseDetailComponent } from './course/course-detail/course-detail.component';
 import { SignUpComponent } from './signup/signup.component';
 import { SignInComponent } from './signin/signin.component';
+import { CourseService} from './course/course.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { CourseCardComponent } from './course/course-card/course-card.component';
@@ -40,7 +41,7 @@ import { CourseCardComponent } from './course/course-card/course-card.component'
     AppRoutingModule, 
     AngularFireModule.initializeApp(firebaseConfig)
   ],
-  providers: [],
+  providers: [CourseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
