@@ -1,4 +1,6 @@
+import 'rxjs/add/operator/switchMap';
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'fa-course-detail',
@@ -7,9 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CourseDetailComponent implements OnInit {
 
-  constructor() { }
+  constructor(private route : ActivatedRoute) { }
 
   ngOnInit() {
+    // this.route.params.switchMap().subscribe(course => this.course => course);
   }
 
 }

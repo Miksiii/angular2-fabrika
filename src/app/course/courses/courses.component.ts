@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
 @Component({
   selector: 'fa-courses',
@@ -7,7 +8,10 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class CoursesComponent {
 
-  @Input()
-  courseName : string;
+  courses : FirebaseListObservable<any[]>;
+
+  constructor(af : AngularFire) {
+    this.courses = af.database.list('/courses');
+  }
 
 }

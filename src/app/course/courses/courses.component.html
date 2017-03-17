@@ -1,7 +1,8 @@
 <div class="col-md-12">
 
-  <fa-course-card></fa-course-card>
-  <fa-course-card></fa-course-card>
-  <fa-course-card></fa-course-card>
+  <fa-course-card 
+    *ngFor="let course of courses | async" 
+    [course]="course">
+  </fa-course-card>
 
 </div>

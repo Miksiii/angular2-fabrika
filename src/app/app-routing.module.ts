@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
 import { CoursesComponent } from './course/courses/courses.component';
+import { CourseDetailComponent } from './course/course-detail/course-detail.component';
 import { SignInComponent } from './signin/signin.component';
 import { SignUpComponent } from './signup/signup.component';
 
@@ -9,6 +10,10 @@ export const ROUTES = [
   {
     path: 'courses',
     component: CoursesComponent
+  },
+  {
+    path: 'course/:title',
+    component: CourseDetailComponent
   },
   {
     path: 'signin',

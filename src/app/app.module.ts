@@ -3,7 +3,14 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule }  from '@angular/router';
-
+import { AngularFireModule } from 'angularfire2';
+export const firebaseConfig = {
+  apiKey: "AIzaSyC2aulT905Qn01-N2uTkCHZ5bvYuJhIO3Q",
+  authDomain: "fabrikars-79b3a.firebaseapp.com",
+  databaseURL: "https://fabrikars-79b3a.firebaseio.com",
+  storageBucket: "fabrikars-79b3a.appspot.com",
+  messagingSenderId: "522725511461"
+};
 import { AppComponent } from './app.component';
 import { CoursesComponent } from './course/courses/courses.component';
 import { HeaderComponent } from './header/header.component';
@@ -30,7 +37,8 @@ import { CourseCardComponent } from './course/course-card/course-card.component'
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule, 
+    AngularFireModule.initializeApp(firebaseConfig)
   ],
   providers: [],
   bootstrap: [AppComponent]

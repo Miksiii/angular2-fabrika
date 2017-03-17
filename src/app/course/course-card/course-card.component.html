@@ -1,17 +1,17 @@
-<div class="col-md-3 fa-course">
+<div class="col-md-3 fa-course" [routerLink]="['/course/', getCourseFriendlyURL()]">
   <div class="fa-course-container">
     <div class="fa-course-container-thumbnail">
       <img src="../../assets/images/course_thumb_1.jpg" >
     </div>
     <div class="fa-course-container-description">
       <div class="fa-course-container-description-title">
-        <h5>Angular2: Getting Started with Ng Cli</h5>
+        <h5>{{course.title}}</h5>
       </div>
       <div class="fa-course-container-description-excerpt">
-        <p>NodeJS, Angular2, Chat App</p>
+        <p>{{course.excerpt}}</p>
       </div>
       <div class="fa-course-container-description-price">
-        <h4>4,990 RSD</h4>
+        <h4>{{course.price}} RSD</h4>
       </div>   
     </div>
   </div>
