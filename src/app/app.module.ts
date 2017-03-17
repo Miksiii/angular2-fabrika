@@ -5,14 +5,15 @@ import { HttpModule } from '@angular/http';
 import { RouterModule }  from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { CoursesComponent } from './courses/courses.component';
+import { CoursesComponent } from './course/courses/courses.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-import { CourseDetailComponent } from './course-detail/course-detail.component';
+import { CourseDetailComponent } from './course/course-detail/course-detail.component';
 import { SignUpComponent } from './signup/signup.component';
 import { SignInComponent } from './signin/signin.component';
 
 import { AppRoutingModule } from './app-routing.module';
+import { CourseCardComponent } from './course/course-card/course-card.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { AppRoutingModule } from './app-routing.module';
     CourseDetailComponent,
     SignUpComponent,
     SignInComponent,
+    CourseCardComponent,
   ],
   imports: [
     BrowserModule,
