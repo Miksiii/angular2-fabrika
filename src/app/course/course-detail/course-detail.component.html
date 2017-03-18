@@ -1,3 +1,22 @@
-<p>
-  course-detail works! 
-</p>
+<div class="col-md-12 fa-course-detail">
+  <fa-course-card [course]="course"></fa-course-card>
+  <div class="col-md-9 fa-course-detail-description">
+    <div class="fa-course-detail-description-title">
+      <h1>{{course.title}}</h1>
+    </div>
+    <div class="fa-course-detail-description-excerpt">
+      <h3>{{course.excerpt}}</h3>
+    </div>
+    <div class="fa-course-detail-description-description">
+      <h4>{{course.description}}</h4>
+    </div>
+    <div class="fa-course-detail-description-options">
+      <a class="btn fa-course-detail-description-options-buy">
+        LEARN NOW {{course.price}} RSD
+      </a>
+      <a class="btn btn-primary fa-course-detail-description-options-wishlist">
+        ADD TO WISHLIST
+      </a>
+    </div>
+  </div>
+</div>

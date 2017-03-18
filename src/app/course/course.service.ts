@@ -1,3 +1,5 @@
+import 'rxjs/add/operator/take'
+import {Observable} from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
 import { Course } from './course';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
@@ -5,22 +7,26 @@ import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'a
 @Injectable()
 export class CourseService {
 
+  courses : Observable<any[]>; // $add, $save.. $get
+  course : FirebaseObjectObservable<any>;
+
   constructor(private af : AngularFire) {
+    this.courses = this.af.database.list('/courses');
   }
 
   getCourses() : Promise<FirebaseListObservable<Course[]>> {
-    return Promise.resolve(this.af.database.list('/courses'));
+    return Promise.resolve(this.courses);
   }
  
   getCourseByKey(key : number) : Promise<FirebaseObjectObservable<Course>> {
-    // return Promise.resolve(this.af.database.object('/courses/1'));
-    // var course : any;
-    //var item = this.af.database.object('/courses/1', { preserveSnapshot: true });
-    //item.subscribe(snapshot => {
-    //  course = snapshot.val();
-    //});
-    //return course;
-    return null;
+    //return Promise.resolve(this.af.database.object('/courses/' + key));
+    return new Promise(
+        (resolve) => {
+          this.af.database.object('/courses/' + key).subscribe(course => {
+            resolve(course);
+          });
+        }
+      );
   }
 
 }

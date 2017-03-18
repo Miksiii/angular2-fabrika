@@ -12,7 +12,7 @@ export const ROUTES = [
     component: CoursesComponent
   },
   {
-    path: 'course/:title',
+    path: 'course/:key',
     component: CourseDetailComponent
   },
   {
