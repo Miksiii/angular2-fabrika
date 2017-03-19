@@ -19,9 +19,11 @@ import { CourseDetailComponent } from './course/course-detail/course-detail.comp
 import { SignUpComponent } from './signup/signup.component';
 import { SignInComponent } from './signin/signin.component';
 import { CourseService} from './course/course.service';
+import { AuthService } from './other/auth.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { CourseCardComponent } from './course/course-card/course-card.component';
+import { DashboardMainComponent } from './dashboard/dashboard-main/dashboard-main.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,7 @@ import { CourseCardComponent } from './course/course-card/course-card.component'
     SignUpComponent,
     SignInComponent,
     CourseCardComponent,
+    DashboardMainComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,7 +44,10 @@ import { CourseCardComponent } from './course/course-card/course-card.component'
     AppRoutingModule, 
     AngularFireModule.initializeApp(firebaseConfig)
   ],
-  providers: [CourseService],
+  providers: [
+    CourseService, 
+    AuthService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -6,6 +6,8 @@ import { CourseDetailComponent } from './course/course-detail/course-detail.comp
 import { SignInComponent } from './signin/signin.component';
 import { SignUpComponent } from './signup/signup.component';
 
+import { DashboardMainComponent } from './dashboard/dashboard-main/dashboard-main.component';
+
 export const ROUTES = [
   {
     path: 'courses',
@@ -22,7 +24,11 @@ export const ROUTES = [
   {
     path: 'signup',
     component: SignUpComponent
-  }  
+  },
+  {
+    path: 'dashboard-main',
+    component: DashboardMainComponent
+  }   
 ];
 
 @NgModule({
