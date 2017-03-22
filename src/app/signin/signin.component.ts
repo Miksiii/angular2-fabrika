@@ -14,7 +14,7 @@ import { AngularFire } from 'angularfire2';
 export class SignInComponent implements OnInit {
 
   user : User;
-  errMessage : string;
+  errMessage : string; 
 
   constructor(
     private authService : AuthService,

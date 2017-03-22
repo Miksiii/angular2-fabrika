@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from './../../other/user';
 import { AuthService } from './../../other/auth.service';
-import { AngularFire } from 'angularfire2';
+import { AngularFire, FirebaseListObservable } from 'angularfire2';
+
+import { Course } from './../../course/course';
+import { CourseService } from './../../course/course.service'
 
 @Component({
   selector: 'app-dashboard-main',
@@ -11,8 +14,11 @@ import { AngularFire } from 'angularfire2';
 })
 export class DashboardMainComponent implements OnInit {
 
+  courses : FirebaseListObservable<Course[]>;
+
   constructor(
     private authService : AuthService,
+    private courseService : CourseService,
     private af : AngularFire,
     private router : Router) {
     this.af.auth.subscribe(
@@ -25,6 +31,8 @@ export class DashboardMainComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.courseService.getCourses()
+      .then(courses => this.courses = courses);
   }
 
 }

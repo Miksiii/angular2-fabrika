@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import { AuthService } from './../other/auth.service';
 
 @Component({
@@ -8,9 +8,15 @@ import { AuthService } from './../other/auth.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private authService : AuthService) { }
+  @Input()
+  authObject;
+
+  constructor(private authService : AuthService) { 
+    console.log(this.authObject);
+  }
 
   ngOnInit() {
+    
   }
 
   signout() : void {

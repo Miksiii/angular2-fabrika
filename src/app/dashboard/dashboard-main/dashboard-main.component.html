@@ -1,3 +1,9 @@
-<p>
-  dashboard-main works!
-</p>
+<div class="col-md-12">
+  <h1>Hello there!</h1>
+  <h3>Welcome to your dashboard where you can access to all of the courses you bought.</h3>
+</div>
+
+<fa-course-card 
+  *ngFor="let course of courses | async" 
+  [course]="course">
+</fa-course-card>

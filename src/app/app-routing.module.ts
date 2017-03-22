@@ -14,6 +14,11 @@ export const ROUTES = [
     component: CoursesComponent
   },
   {
+    path: '',
+    redirectTo: 'courses',
+    pathMatch: 'full'
+  },
+  {
     path: 'course/:key',
     component: CourseDetailComponent
   },
