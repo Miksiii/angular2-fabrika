@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Course } from './../course';
 
 @Component({
@@ -9,9 +10,11 @@ import { Course } from './../course';
 export class CourseCardComponent implements OnInit {
 
   @Input()
-  course : Course;
+  course : any;
+  @Input()
+  routeContext;
 
-  constructor() { }
+  constructor(private router : Router) { }
 
   ngOnInit() {
     
@@ -19,6 +22,17 @@ export class CourseCardComponent implements OnInit {
 
   getCourseFriendlyURL() : string {
     return this.course.title.replace(/ /g, "-");
+  }
+
+  goToContext() {
+    switch(this.routeContext) {
+      case 'detail':
+        this.router.navigate(['/course/', this.course.$key]);
+        break;
+      case 'overview':
+        this.router.navigate(['/course/', this.course.$key, 'overview']);
+        break;
+    }
   }
 
 }

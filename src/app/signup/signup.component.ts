@@ -20,9 +20,9 @@ export class SignUpComponent implements OnInit {
     private router : Router) {
     this.af.auth.subscribe(
       auth => {
-        if (auth) {
-          this.router.navigateByUrl('/dashboard-main');
-        }
+        //if (auth) {
+        //  this.router.navigateByUrl('/dashboard-main');
+        //}
       }
     );
   }
@@ -32,7 +32,6 @@ export class SignUpComponent implements OnInit {
   }
 
   onSignUp() {
-    console.log("voila!" );
     this.authService.createUser(
       this.user.email, this.user.password
     );

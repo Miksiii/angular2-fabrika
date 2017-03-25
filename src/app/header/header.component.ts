@@ -10,17 +10,18 @@ export class HeaderComponent implements OnInit {
 
   @Input()
   authObject;
+  @Input() 
+  currentUser;
 
   constructor(private authService : AuthService) { 
-    console.log(this.authObject);
   }
 
   ngOnInit() {
-    
+
   }
 
   signout() : void {
-    this.authService.signout();
+    this.authService.signout(this.currentUser.uid);
   }
 
 }

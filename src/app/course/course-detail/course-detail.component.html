@@ -11,7 +11,8 @@
       <h4>{{course.description}}</h4>
     </div>
     <div class="fa-course-detail-description-options">
-      <a class="btn fa-course-detail-description-options-buy">
+      <a class="btn fa-course-detail-description-options-buy"
+        [routerLink]="['/course/', course.$key, 'overview']">
         START LEARNING NOW {{course.price}} RSD
       </a>
       <a class="btn fa-course-detail-description-options-wishlist">

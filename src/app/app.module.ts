@@ -20,10 +20,12 @@ import { SignUpComponent } from './signup/signup.component';
 import { SignInComponent } from './signin/signin.component';
 import { CourseService} from './course/course.service';
 import { AuthService } from './other/auth.service';
+import { AuthGuard } from './other/auth-guard.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { CourseCardComponent } from './course/course-card/course-card.component';
 import { DashboardMainComponent } from './dashboard/dashboard-main/dashboard-main.component';
+import { CourseOverviewComponent } from './dashboard/course-overview/course-overview.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import { DashboardMainComponent } from './dashboard/dashboard-main/dashboard-mai
     SignInComponent,
     CourseCardComponent,
     DashboardMainComponent,
+    CourseOverviewComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +49,8 @@ import { DashboardMainComponent } from './dashboard/dashboard-main/dashboard-mai
   ],
   providers: [
     CourseService, 
-    AuthService
+    AuthService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

@@ -13,16 +13,28 @@ import { AngularFire } from 'angularfire2';
 export class AppComponent implements OnInit {
   title = 'app works!';
   authObject;
+  currentUser;
 
   constructor(
     private authService : AuthService,
     private af : AngularFire,
     private router : Router) {
-      this.af.auth.subscribe(
-        auth => {
-          this.authObject = auth;
+
+    this.af.auth.subscribe(
+      auth => {
+        this.authObject = auth;
+
+        // if auth is set but no local object then fetch the data 
+        if(auth) {
+          this.authService.getCurrentUser(auth.uid)
+            .then(foo => foo.subscribe(user => {
+              this.currentUser = user;
+            }));
+          // this.currentUser = this.authService.getCurrentUser(auth.uid);
         }
-      );
+      }
+    );
+
   }
 
   ngOnInit() {

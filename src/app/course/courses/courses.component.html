@@ -2,7 +2,9 @@
 
   <fa-course-card 
     *ngFor="let course of courses | async" 
-    [course]="course">
+    [course]="course"
+    [routeContext]="'detail'"
+  >
   </fa-course-card>
 
 </div>
