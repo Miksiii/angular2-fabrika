@@ -13,6 +13,7 @@
     </div>
     <div class="fa-course-detail-description-options">
       <a class="btn fa-course-detail-description-options-buy"
+        (click)="buy()"
         [routerLink]="['/course/', course?.$key, 'overview']">
         START LEARNING NOW {{course?.price}} RSD
       </a>

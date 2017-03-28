@@ -22,6 +22,10 @@ export class CourseService {
     return Promise.resolve(this.af.database.object(`courses/${key}`));
   }
 
+  getLecturesByCourseKey(key : string) : Promise<FirebaseListObservable<any[]>> {
+    return Promise.resolve(this.af.database.list(`lectures/${key}`));
+  }
+
   createCourse(course) {
     this.af.database.list('courses').push({
       title: course.title,
@@ -29,6 +33,12 @@ export class CourseService {
       description: course.description,
       price: course.price, 
       thumbnail: course.thumbnail
+    });
+  }
+
+  createLecture(courseKey, title) {
+    this.af.database.list(`lectures/${courseKey}`).push({
+      title: title
     });
   }
 

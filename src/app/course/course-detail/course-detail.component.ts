@@ -36,4 +36,8 @@ export class CourseDetailComponent implements OnInit {
           });
   }
 
+  buy() {
+    
+  }
+
 }

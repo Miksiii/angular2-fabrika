@@ -1,7 +1,7 @@
 import 'rxjs/add/operator/switchMap';
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
+import { AngularFire, FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2';
 import { DomSanitizer} from '@angular/platform-browser';
 
 // custom components
@@ -16,9 +16,10 @@ import { CourseService } from './../../course/course.service';
 export class CourseOverviewComponent implements OnInit {
 
   course : any;
-  courseLectures : any[];
   section : any;
   videoUrl : any;
+  lectureTitle : string;
+  lectures : FirebaseListObservable<any[]>;
 
   constructor(
     private route : ActivatedRoute,
@@ -32,22 +33,34 @@ export class CourseOverviewComponent implements OnInit {
   ngOnInit() {
     this.route.params.
       switchMap((params : Params) => 
-        this.course = this.courseService.getCourseByKey(+params['key']).
-          then(course => this.course = course)).
-          subscribe(course => {
-            this.course = course;
-            this.courseLectures = this.course.content.lectures;
-
-            for(let i = 0; i < this.courseLectures.length; i++) {
-              let tmpLecture = this.courseLectures[i];
-            }
+        this.courseService.getCourseByKey(params['key'])).
+          subscribe(foo => {
+            foo.subscribe(course => {
+              this.course = course;
+              this.courseService.getLecturesByCourseKey(course.$key)
+                                      .then(foo => {
+                                        foo.subscribe(lectures => {
+                                          this.course.lectures = lectures;
+                                          })
+                                      });
+            })
           });
+
+        //this.af.database.list(`lectures/${course.$key}`);
+         //     console.log(this.lectures);
+
+    this.lectureTitle = '';          
   }
 
   show(section) : void {
     this.section = section;
     this.videoUrl = this.sanitizeUrl(this.section.video);
   }
+
+  createLecture() {
+    this.courseService.createLecture(this.course.$key, this.lectureTitle);
+    this.lectureTitle = '';
+  }  
 
   sanitizeUrl(videoURL : string) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(videoURL);
