@@ -1,12 +1,19 @@
 <div class="col-md-12 fa-course-overview">
   <div class="col-md-4 fa-course-overview-affix">
-
-    <ul class="nav nav-pills nav-stacked fa-course-overview-affix-preview" type="1">
+  {{course.$key}}
+    <ul class="nav nav-pills nav-stacked fa-course-overview-affix-preview" type="1" *ngIf="course?.content?.lectures">
       <li role="presentation"
           class="nav nav-pills nav-stacked fa-course-overview-affix-preview-item"
-          *ngFor="let section of course?.content?.lectures"
-          (click)="show(section)">
-          {{section?.title}}
+          *ngFor="let lecture of course?.content?.lectures">
+        <h4>{{lecture?.title}}</h4>
+        <ul class="nav nav-pills nav-stacked fa-course-overview-affix-preview-item-sections">
+          <li role="presentation" 
+              class="fa-course-overview-affix-preview-item-sections-item"
+              *ngFor="let section of lecture?.sections"
+              (click)="show(section)">
+            {{section?.title}}
+          </li>
+        </ul>      
       </li>
     </ul>
 
@@ -14,13 +21,14 @@
   <div class="col-md-8 fa-course-overview-content">
     <div *ngIf="section" class="fa-course-overview-content-player">
       <h2>{{section?.title}}</h2>
-      <iframe class="e2e-iframe-trusted-src" width="640" height="390" [src]="videoUrl"></iframe>
-      {{section?.video}}
+      <iframe class="e2e-iframe-trusted-src" width="640" height="390" border="0" [src]="videoUrl"></iframe>
     </div>
     <div *ngIf="!section" class="fa-course-overview-content-wellcome">
       <h1>{{course.title}}</h1>
       <h2>{{course.excerpt}}</h2>
-      <button class="fa-course-overview-content-wellcome-btn-start">GO TO VIDEO</button>
+      <button class="fa-course-overview-content-wellcome-btn-start">
+        CONTINUE 
+      </button>
     </div>
   </div>
 </div>

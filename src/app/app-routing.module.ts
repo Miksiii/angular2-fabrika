@@ -4,12 +4,11 @@ import {RouterModule, Routes} from '@angular/router';
 import { AuthGuard }                from './other/auth-guard.service';
 
 import { CoursesComponent } from './course/courses/courses.component';
+import { CourseCreateComponent } from './course/course-create/course-create.component';
 import { CourseDetailComponent } from './course/course-detail/course-detail.component';
 import { SignInComponent } from './signin/signin.component';
 import { SignUpComponent } from './signup/signup.component';
-
 import { DashboardMainComponent } from './dashboard/dashboard-main/dashboard-main.component';
-
 import { CourseOverviewComponent } from './dashboard/course-overview/course-overview.component';
 
 export const ROUTES = [
@@ -31,6 +30,10 @@ export const ROUTES = [
     component: CourseOverviewComponent, 
     //canActivate: [AuthGuard]
   },  
+  {
+    path: 'create/course',
+    component: CourseCreateComponent
+  },
   {
     path: 'signin',
     component: SignInComponent

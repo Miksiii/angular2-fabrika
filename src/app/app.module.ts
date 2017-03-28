@@ -26,6 +26,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { CourseCardComponent } from './course/course-card/course-card.component';
 import { DashboardMainComponent } from './dashboard/dashboard-main/dashboard-main.component';
 import { CourseOverviewComponent } from './dashboard/course-overview/course-overview.component';
+import { CourseCreateComponent } from './course/course-create/course-create.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { CourseOverviewComponent } from './dashboard/course-overview/course-over
     SignInComponent,
     CourseCardComponent,
     DashboardMainComponent,
-    CourseOverviewComponent
+    CourseOverviewComponent,
+    CourseCreateComponent
   ],
   imports: [
     BrowserModule,

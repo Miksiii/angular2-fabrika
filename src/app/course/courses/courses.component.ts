@@ -10,13 +10,15 @@ import { CourseService} from './../course.service';
 })
 export class CoursesComponent implements OnInit {
 
-  courses : FirebaseListObservable<Course[]>;
+  courses;
   
   constructor(private courseService : CourseService) { }
 
   ngOnInit() {
     this.courseService.getCourses().
-      then(courses => this.courses = courses);
+      then(foo => foo.subscribe(courses => {
+        this.courses = courses;
+      }));
   }
 
 }

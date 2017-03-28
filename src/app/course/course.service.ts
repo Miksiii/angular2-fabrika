@@ -15,18 +15,21 @@ export class CourseService {
   }
 
   getCourses() : Promise<FirebaseListObservable<Course[]>> {
-    return Promise.resolve(this.courses);
+    return Promise.resolve(this.af.database.list('/courses'));
   }
  
-  getCourseByKey(key : number) : Promise<FirebaseObjectObservable<Course>> {
-    //return Promise.resolve(this.af.database.object('/courses/' + key));
-    return new Promise(
-        (resolve) => {
-          this.af.database.object('/courses/' + key).subscribe(course => {
-            resolve(course);
-          });
-        }
-      );
+  getCourseByKey(key : any) : Promise<FirebaseObjectObservable<any>> {
+    return Promise.resolve(this.af.database.object(`courses/${key}`));
+  }
+
+  createCourse(course) {
+    this.af.database.list('courses').push({
+      title: course.title,
+      excerpt: course.excerpt,
+      description: course.description,
+      price: course.price, 
+      thumbnail: course.thumbnail
+    });
   }
 
 }

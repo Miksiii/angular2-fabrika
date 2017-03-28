@@ -16,6 +16,8 @@ import { CourseService } from './../course.service';
 export class CourseDetailComponent implements OnInit {
 
   course : any; 
+  courseKey : any;
+  courses : any;
 
   constructor(
     private route : ActivatedRoute,
@@ -26,20 +28,12 @@ export class CourseDetailComponent implements OnInit {
   ngOnInit() {
     this.route.params.
       switchMap((params : Params) => 
-        this.course = this.courseService.getCourseByKey(+params['key']).
-          then(course => this.course = course)).
-      subscribe(course => this.course = course);
-
-    //this.course = this.courseService.getCourseByKey(1).
-      ///then(course => this.course = course);
-      
-//    console.log(this.course);
-//    this.course = this.courseService.getCourseByKey(1)
-//     .then(foo => {        
-//       foo.subscribe(course => {
-//         this.course = course;
-//      });
-//    });
+        this.course = this.courseService.getCourseByKey(params['key'])).
+          subscribe(foo => {
+            foo.subscribe(course => {
+              this.course = course;
+            })
+          });
   }
 
 }

@@ -1,0 +1,78 @@
+caos
+
+<div class="jumbotron">
+  <div class="form-container">
+    <h2>Create new course</h2>
+
+    <form class="form" 
+          (ngSubmit)="createCourse()" #createCourseForm="ngForm" >
+      
+      <!-- title -->
+      <div class="form-group">
+        <label for="title">Title:</label>
+        <input type="text" name="title" id="title" class="form-control" required 
+          [(ngModel)]="course.title" #titleRef="ngModel">
+        
+        <div class="alert alert-danger" 
+           [hidden]="titleRef.valid || titleRef.pristine">
+          Title is a must!
+        </div>  
+      </div>    
+
+      <!-- excerpt -->
+      <div class="form-group">
+        <label for="excerpt">Excerpt:</label>
+        <input type="text" name="excerpt" id="excerpt" class="form-control" required 
+          [(ngModel)]="course.excerpt" #excerptRef="ngModel">
+        
+        <div class="alert alert-danger" 
+           [hidden]="excerptRef.valid || excerptRef.pristine">
+          Excerpt is a must!
+        </div>  
+      </div> 
+
+      <!-- description -->
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <input type="text" name="description" id="description" class="form-control" required 
+          [(ngModel)]="course.description" #descriptionRef="ngModel">
+        
+        <div class="alert alert-danger" 
+           [hidden]="descriptionRef.valid || descriptionRef.pristine">
+          Description is a must!
+        </div>  
+      </div>       
+
+      <!-- price -->
+      <div class="form-group">
+        <label for="price">Price:</label>
+        <input type="text" name="price" id="price" class="form-control" required 
+          [(ngModel)]="course.price" #priceRef="ngModel">
+        
+        <div class="alert alert-danger" 
+           [hidden]="priceRef.valid || priceRef.pristine">
+          Price is a must!
+        </div>  
+      </div>       
+
+      <!-- price -->
+      <div class="form-group">
+        <label for="thumbnail">Thumbnail:</label>
+        <input type="text" name="thumbnail" id="thumbnail" class="form-control" required 
+          [(ngModel)]="course.thumbnail" #thumbnailRef="ngModel">
+        
+        <div class="alert alert-danger" 
+           [hidden]="thumbnailRef.valid || thumbnailRef.pristine">
+          Thumbnail is a must!
+        </div>  
+      </div>   
+
+      <div class="form-group">
+        <button type="submit" class="btn btn-success" [disabled]="!createCourseForm.form.valid">
+          Create Course!
+        </button>
+      </div>        
+
+    </form>
+  </div>
+</div>

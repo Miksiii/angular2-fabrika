@@ -16,6 +16,7 @@ import { CourseService } from './../../course/course.service';
 export class CourseOverviewComponent implements OnInit {
 
   course : any;
+  courseLectures : any[];
   section : any;
   videoUrl : any;
 
@@ -35,6 +36,11 @@ export class CourseOverviewComponent implements OnInit {
           then(course => this.course = course)).
           subscribe(course => {
             this.course = course;
+            this.courseLectures = this.course.content.lectures;
+
+            for(let i = 0; i < this.courseLectures.length; i++) {
+              let tmpLecture = this.courseLectures[i];
+            }
           });
   }
 
