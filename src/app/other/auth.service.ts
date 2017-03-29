@@ -47,7 +47,8 @@ export class AuthService {
       email: email,
       password: password,
       isLoggedIn: isLoggedIn,
-      courses: courses
+      courses: courses,
+      role: 'user'
     });
   }
 

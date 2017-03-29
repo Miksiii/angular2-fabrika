@@ -1,37 +1,61 @@
+{{currentUser?.role}}
+
+<!-- Aside menu with lectures, sections and options -->
 <div class="col-md-12 fa-course-overview">
+
+  <!-- affix -->
   <div class="col-md-4 fa-course-overview-affix">
-    <ul class="fa-course-overview-affix-preview">
-      <li class="fa-course-overview-affix-preview-item" 
+
+    <!-- lectures list -->
+    <ul class="fa-course-overview-affix-ul-lectures">
+
+      <!-- single lecture -->
+      <li class="fa-course-overview-affix-ul-lectures-lecture" 
         *ngFor="let lecture of course?.lectures">
-        {{lecture?.title}}
-        <ul class="fa-course-overview-affix-preview-item-sections">
-          <li class="fa-course-overview-affix-preview-item-sections-item" 
-            *ngFor="let section of lecture?.sections">
-            {{section.title}}
+        <i class="fa fa-address-card-o" aria-hidden="true"></i>
+        <a>
+          {{lecture?.title}}
+        </a>
+
+        <!-- sections -->
+        <ul class="fa-course-overview-affix-ul-lectures-lecture-sections">
+
+          <!-- single section -->
+          <li class="fa-course-overview-affix-ul-lectures-lecture-sections-section" 
+            *ngFor="let section of lecture?.sections"
+            (click)="show(section)">
+            <i class="fa fa-caret-square-o-right" aria-hidden="true"></i>
+            <a>{{section.title}}</a>
+          </li> <!-- single section ends -->
+
+          <!-- admin options for section -->
+          <li class="fa-course-overview-affix-preview-item-sections-item"
+            *ngIf="currentUser?.role === 'admin'">
+            <button type="submit" class="btn btn-info"> + </button> 
+            <fa-form-section [lectureKey]="lecture?.$key"></fa-form-section>
           </li>
         </ul>
-        <button type="submit" class="btn btn-info"
-          (click)="displayForm('section')">
-          + Section
-        </button> 
-        <fa-form-section [lectureKey]="lecture?.$key"></fa-form-section>
-      </li>
+      </li> <!-- single lecture ends -->
 
-      <button type="submit" class="btn btn-info" 
-        *ngIf="!isFormLectureVisible"
-        (click)="displayForm('lecture')">>
-        + Lecture
-      </button>  
-      <fa-form-lecture 
-        [courseKey]="course?.$key"
-        *ngIf="isFormLectureVisible"
-      ></fa-form-lecture>
+      <!-- admin options -->
+      <li class="fa-course-overview-affix-preview-item"
+        *ngIf="currentUser?.role === 'admin'">
+        <button type="submit" class="btn btn-info"> + </button>  
+        <fa-form-lecture [courseKey]="course?.$key"></fa-form-lecture>
+      </li>
     </ul>
   </div>
   <div class="col-md-8 fa-course-overview-content">
     <div *ngIf="sectionActive" class="fa-course-overview-content-player">
-      <h2>{{sectionActive?.title}}</h2>
       <iframe class="e2e-iframe-trusted-src" width="640" height="390" border="0" [src]="videoUrl"></iframe>
+      <h2>{{sectionActive?.title}}</h2>
+      <div class="col-md-12 comment">
+        <fa-form-comment 
+          [courseKey]="course?.$key"
+          [sectionKey]="sectionActive?.$key"
+          [username]="currentUser?.username">
+        </fa-form-comment>
+      </div>
     </div>
     <div *ngIf="!sectionActive" class="fa-course-overview-content-wellcome">
       <h1>{{course?.title}}</h1>

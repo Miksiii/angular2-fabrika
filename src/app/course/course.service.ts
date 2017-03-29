@@ -30,6 +30,10 @@ export class CourseService {
     return Promise.resolve(this.af.database.list(`sections/${key}`));
   }
 
+  getCommentsOfCourseSection(courseKey : string, sectionKey) : Promise<FirebaseListObservable<any[]>> {
+    return Promise.resolve(this.af.database.list(`comments/${courseKey}/${sectionKey}`));
+  }
+
   createCourse(course) {
     this.af.database.list('courses').push({
       title: course.title,
@@ -49,8 +53,17 @@ export class CourseService {
   createSection(lectureKey, section) {
     this.af.database.list(`sections/${lectureKey}`).push({
       title: section.title,
-      video: section.video
+      videoId: section.video
     });
   }
+
+  createComment(courseKey, sectionKey, comment) {
+    this.af.database.list(`comments/${courseKey}/${sectionKey}`).push({
+      username: comment.username,
+      body: comment.body,
+      date: comment.date
+    });
+  }
+
 
 }

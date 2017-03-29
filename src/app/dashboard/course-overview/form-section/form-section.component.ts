@@ -20,7 +20,12 @@ export class FormSectionComponent implements OnInit {
   ngOnInit() {
   }
 
+  getYouTubeVideoUniqueKey(videoURL) : string {
+    return videoURL.slice(-11);
+  }
+
   createSection() {
+    this.section.video = this.getYouTubeVideoUniqueKey(this.section.video);
     this.courseService.createSection(this.lectureKey, this.section);
     this.section.title = '';
     this.section.video = '';

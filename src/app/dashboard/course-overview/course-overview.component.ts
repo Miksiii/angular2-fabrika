@@ -7,6 +7,7 @@ import { DomSanitizer} from '@angular/platform-browser';
 // custom components
 import { Course } from './../../course/course';
 import { CourseService } from './../../course/course.service';
+import { AuthService } from './../../other/auth.service';
 
 @Component({
   selector: 'app-course-overview',
@@ -19,15 +20,29 @@ export class CourseOverviewComponent implements OnInit {
   sectionActive : any;
   videoUrl : any;
   lectures : FirebaseListObservable<any[]>;
-  isFormLectureVisible : boolean = false;
+
+  currentUser;
 
   constructor(
     private route : ActivatedRoute,
     private courseService : CourseService, 
     private af : AngularFire,
-    private sanitizer : DomSanitizer
+    private sanitizer : DomSanitizer,
+    private authService : AuthService
   ) {
+    this.af.auth.subscribe(
+      auth => {
 
+        // if auth is set but no local object then fetch the data 
+        if(auth) {
+          this.authService.getCurrentUser(auth.uid)
+            .then(foo => foo.subscribe(user => {
+              this.currentUser = user;
+            }));
+          // this.currentUser = this.authService.getCurrentUser(auth.uid);
+        }
+      }
+    );
   }
 
   ngOnInit() {
@@ -56,11 +71,13 @@ export class CourseOverviewComponent implements OnInit {
 
   show(section) : void {
     this.sectionActive = section;
-    this.videoUrl = this.sanitizeUrl(this.sectionActive.video);
+    let dangerousVideoUrl = 'https://www.youtube.com/embed/' + section.videoId;
+    this.videoUrl = this.sanitizeUrl(dangerousVideoUrl);
   }
 
   sanitizeUrl(videoURL : string) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(videoURL);
   }
+
 
 }

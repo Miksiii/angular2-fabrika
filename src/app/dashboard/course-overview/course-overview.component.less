@@ -1,28 +1,37 @@
 .fa-course-overview {
+  
   &-affix {
 
-    &-preview {
+    &-ul-lectures {
       list-style-type: none;
 
-      &-item {
+      &-lecture {
+        margin-bottom: 30px;
         cursor: pointer;
-        background: #eaeaea;
         margin-left: 0;
-        padding: 10px 10px;
-        border-radius: 4px;
         font-weight: bold;
-        border-bottom: 1px solid white;
-
 
         &-sections {
-          padding-left: 20px;
+          padding-left: 10px;
           font-weight: normal;
+          margin-top: 10px;
+          margin-bottom: 10px;
+          margin-right: 10px;          
 
-          &-item {
-            padding: 0px 0px 3px 0px;
+          &-section {
+            list-style-type: none;
+            margin: 0;
+            padding: 10px 5px;
+            margin-bottom: 3px;
+            border-bottom: 1px solid #eaeaea;
 
             &:hover {
               color: black;
+            }
+
+            .btn {
+              width: 100%;
+              text-align: right;
             }
           }
         }
@@ -32,9 +41,6 @@
   }
 
   &-content {
-    &-player {
-
-    }
 
     &-wellcome {
       text-align: center;
@@ -46,5 +52,16 @@
         color: white;
       }
     }
+
+    &-player {
+      iframe {
+        width: 100%;
+      }
+    }
+
+    &-comment {
+      
+    }
+
   }
 }
