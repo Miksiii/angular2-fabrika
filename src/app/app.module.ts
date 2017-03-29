@@ -27,6 +27,8 @@ import { CourseCardComponent } from './course/course-card/course-card.component'
 import { DashboardMainComponent } from './dashboard/dashboard-main/dashboard-main.component';
 import { CourseOverviewComponent } from './dashboard/course-overview/course-overview.component';
 import { CourseCreateComponent } from './course/course-create/course-create.component';
+import { FormLectureComponent } from './dashboard/course-overview/form-lecture/form-lecture.component';
+import { FormSectionComponent } from './dashboard/course-overview/form-section/form-section.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { CourseCreateComponent } from './course/course-create/course-create.comp
     CourseCardComponent,
     DashboardMainComponent,
     CourseOverviewComponent,
-    CourseCreateComponent
+    CourseCreateComponent,
+    FormLectureComponent,
+    FormSectionComponent
   ],
   imports: [
     BrowserModule,

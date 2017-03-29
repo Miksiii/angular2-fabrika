@@ -1,0 +1,18 @@
+<div class="form">
+  <h3>New Section</h3>
+  <form (ngSubmit)="createSection()" #addSectionForm="ngForm">
+    <div class="form-group">
+      <label for="title"></label>
+      <input type="text" id="title" name="title" [(ngModel)]="section.title" #SecTitleRef="ngModel">
+    </div>
+    <div class="form-group">
+      <label for="title"></label>
+      <input type="text" id="video" name="video" [(ngModel)]="section.video" #SecVideoRef="ngModel">
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-default" [disabled]="!addSectionForm.form.valid">
+        Add new section!
+      </button>    
+    </div>              
+  </form>
+</div>

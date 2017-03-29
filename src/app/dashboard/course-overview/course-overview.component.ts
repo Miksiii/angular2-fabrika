@@ -16,10 +16,10 @@ import { CourseService } from './../../course/course.service';
 export class CourseOverviewComponent implements OnInit {
 
   course : any;
-  section : any;
+  sectionActive : any;
   videoUrl : any;
-  lectureTitle : string;
   lectures : FirebaseListObservable<any[]>;
+  isFormLectureVisible : boolean = false;
 
   constructor(
     private route : ActivatedRoute,
@@ -38,29 +38,26 @@ export class CourseOverviewComponent implements OnInit {
             foo.subscribe(course => {
               this.course = course;
               this.courseService.getLecturesByCourseKey(course.$key)
-                                      .then(foo => {
-                                        foo.subscribe(lectures => {
-                                          this.course.lectures = lectures;
-                                          })
-                                      });
+                .then(foo => {
+                  foo.subscribe(lectures => {
+                    this.course.lectures = lectures;
+
+                    for(let i = 0; i < this.course.lectures.length; i++){
+                      this.courseService.getSectionsByLectureKey(this.course.lectures[i].$key)
+                        .then(foo => foo.subscribe(sections => {
+                          this.course.lectures[i].sections = sections;
+                        }))
+                    }
+                    })
+                });
             })
           });
-
-        //this.af.database.list(`lectures/${course.$key}`);
-         //     console.log(this.lectures);
-
-    this.lectureTitle = '';          
   }
 
   show(section) : void {
-    this.section = section;
-    this.videoUrl = this.sanitizeUrl(this.section.video);
+    this.sectionActive = section;
+    this.videoUrl = this.sanitizeUrl(this.sectionActive.video);
   }
-
-  createLecture() {
-    this.courseService.createLecture(this.course.$key, this.lectureTitle);
-    this.lectureTitle = '';
-  }  
 
   sanitizeUrl(videoURL : string) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(videoURL);

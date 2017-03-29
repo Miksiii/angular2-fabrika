@@ -1,36 +1,39 @@
 <div class="col-md-12 fa-course-overview">
   <div class="col-md-4 fa-course-overview-affix">
-  
-  <h3>Add Lecture</h3>
-    <div class="form">
-      <form
-            (ngSubmit)="createLecture()" #addLectureForm="ngForm">
+    <ul class="fa-course-overview-affix-preview">
+      <li class="fa-course-overview-affix-preview-item" 
+        *ngFor="let lecture of course?.lectures">
+        {{lecture?.title}}
+        <ul class="fa-course-overview-affix-preview-item-sections">
+          <li class="fa-course-overview-affix-preview-item-sections-item" 
+            *ngFor="let section of lecture?.sections">
+            {{section.title}}
+          </li>
+        </ul>
+        <button type="submit" class="btn btn-info"
+          (click)="displayForm('section')">
+          + Section
+        </button> 
+        <fa-form-section [lectureKey]="lecture?.$key"></fa-form-section>
+      </li>
 
-        <div class="form-group">
-          <label for="title"></label>
-          <input type="text" id="title" name="title" [(ngModel)]="lectureTitle" #LecTitleRef="ngModel">
-        </div>
-
-        <div class="form-group">
-          <button type="submit" class="btn btn-success" [disabled]="!addLectureForm.form.valid">
-            Add new lecture!
-          </button>    
-        </div>
-      </form>
-
-      <ul class="list">
-        <li *ngFor="let lecture of course?.lectures">
-          12{{lecture?.title}}
-        </li>
-      </ul>
-    </div>
+      <button type="submit" class="btn btn-info" 
+        *ngIf="!isFormLectureVisible"
+        (click)="displayForm('lecture')">>
+        + Lecture
+      </button>  
+      <fa-form-lecture 
+        [courseKey]="course?.$key"
+        *ngIf="isFormLectureVisible"
+      ></fa-form-lecture>
+    </ul>
   </div>
   <div class="col-md-8 fa-course-overview-content">
-    <div *ngIf="section" class="fa-course-overview-content-player">
-      <h2>{{section?.title}}</h2>
+    <div *ngIf="sectionActive" class="fa-course-overview-content-player">
+      <h2>{{sectionActive?.title}}</h2>
       <iframe class="e2e-iframe-trusted-src" width="640" height="390" border="0" [src]="videoUrl"></iframe>
     </div>
-    <div *ngIf="!section" class="fa-course-overview-content-wellcome">
+    <div *ngIf="!sectionActive" class="fa-course-overview-content-wellcome">
       <h1>{{course?.title}}</h1>
       <h2>{{course?.excerpt}}</h2>
       <button class="fa-course-overview-content-wellcome-btn-start">
