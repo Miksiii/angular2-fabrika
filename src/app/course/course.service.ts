@@ -1,8 +1,9 @@
 import 'rxjs/add/operator/take'
-import {Observable} from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
 import { Course } from './course';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class CourseService {
@@ -10,7 +11,10 @@ export class CourseService {
   courses : Observable<any[]>; // $add, $save.. $get
   course : FirebaseObjectObservable<any>;
 
-  constructor(private af : AngularFire) {
+  constructor(
+    private af : AngularFire,
+    private router : Router
+  ) {
     this.courses = this.af.database.list('/courses');
   }
 
@@ -35,13 +39,14 @@ export class CourseService {
   }
 
   createCourse(course) {
-    this.af.database.list('courses').push({
+    let newCourse = this.af.database.list('courses').push({
       title: course.title,
       excerpt: course.excerpt,
       description: course.description,
       price: course.price, 
       thumbnail: course.thumbnail
     });
+    this.router.navigate(['course', newCourse.key, 'overview']);
   }
 
   createLecture(courseKey, title) {

@@ -4,12 +4,14 @@
 
     <div class="form-group">
       <label for="title"></label>
-      <input type="text" id="title" name="title" [(ngModel)]="lecture.title" #LecTitleRef="ngModel">
+      <input type="text" id="title" name="title" class="form-control" 
+        [(ngModel)]="lecture.title" #LecTitleRef="ngModel">
     </div>
 
     <div class="form-group">
-      <button type="submit" class="btn btn-default" [disabled]="!addLectureForm.form.valid">
-        Add new lecture!!
+      <button type="submit" class="btn btn-default" 
+        [disabled]="!addLectureForm.form.valid">
+        Create
       </button>    
     </div>
   </form>

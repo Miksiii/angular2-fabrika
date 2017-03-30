@@ -11,7 +11,8 @@
         </a>
       </li>
       <li>
-        <a routerLink="/create/course" routerLinkActive="active">
+        <a routerLink="/create/course" routerLinkActive="active" 
+          *ngIf="authObject && (currentUser?.role === 'admin')">
           Create 
         </a>
       </li>

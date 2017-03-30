@@ -20,6 +20,11 @@ export class CourseOverviewComponent implements OnInit {
   sectionActive : any;
   videoUrl : any;
   lectures : FirebaseListObservable<any[]>;
+  sectionFormActive : boolean = false;
+  lectureFormActive : boolean = false;
+
+  lectureKey;
+  courseKey;
 
   currentUser;
 
@@ -70,6 +75,7 @@ export class CourseOverviewComponent implements OnInit {
   }
 
   show(section) : void {
+    this.sectionFormActive = false;
     this.sectionActive = section;
     let dangerousVideoUrl = 'https://www.youtube.com/embed/' + section.videoId;
     this.videoUrl = this.sanitizeUrl(dangerousVideoUrl);
@@ -77,6 +83,20 @@ export class CourseOverviewComponent implements OnInit {
 
   sanitizeUrl(videoURL : string) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(videoURL);
+  }
+
+  displayFormSection(lectureKey) {
+    this.lectureKey = lectureKey;
+    this.sectionActive = null; 
+    this.lectureFormActive = false;
+    this.sectionFormActive = true;
+  }
+
+  displayFormLecture(courseKey) {
+    this.courseKey = courseKey;
+    this.sectionActive = null;
+    this.sectionFormActive = false; 
+    this.lectureFormActive = true; 
   }
 
 

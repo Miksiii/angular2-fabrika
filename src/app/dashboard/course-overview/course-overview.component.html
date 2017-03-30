@@ -27,10 +27,10 @@
           </li> <!-- single section ends -->
 
           <!-- admin options for section -->
-          <li class="fa-course-overview-affix-preview-item-sections-item"
+          <li class="fa-course-overview-affix-ul-lectures-lecture-sections-section"
             *ngIf="currentUser?.role === 'admin'">
-            <button type="submit" class="btn btn-info"> + </button> 
-            <fa-form-section [lectureKey]="lecture?.$key"></fa-form-section>
+              <i class="fa fa-plus" aria-hidden="true"
+                (click)="displayFormSection(lecture?.$key)"> New </i>
           </li>
         </ul>
       </li> <!-- single lecture ends -->
@@ -38,11 +38,12 @@
       <!-- admin options -->
       <li class="fa-course-overview-affix-preview-item"
         *ngIf="currentUser?.role === 'admin'">
-        <button type="submit" class="btn btn-info"> + </button>  
-        <fa-form-lecture [courseKey]="course?.$key"></fa-form-lecture>
+          <i class="fa fa-plus" aria-hidden="true"
+            (click)="displayFormLecture(course?.$key)"> New Lecture </i>  
       </li>
     </ul>
   </div>
+  <!-- content -->
   <div class="col-md-8 fa-course-overview-content">
 
     <!-- A Playr -->
@@ -61,12 +62,24 @@
     </div>
 
     <!-- Welcome screen -->
-    <div *ngIf="!sectionActive" class="fa-course-overview-content-wellcome">
+    <div *ngIf="!sectionActive && sectionActive !== null" class="fa-course-overview-content-wellcome">
       <h1>{{course?.title}}</h1>
       <h2>{{course?.excerpt}}</h2>
       <button class="fa-course-overview-content-wellcome-btn-start">
         CONTINUE 
       </button>
     </div>
+
+    <!-- section form --> 
+    <div class="section-form" *ngIf="sectionFormActive">
+      <h2>Section form</h2>
+      <fa-form-section [lectureKey]="lectureKey"></fa-form-section>
+    </div>
+
+    <!-- lecture form --> 
+    <div class="section-form" *ngIf="lectureFormActive">
+      <h2>Lecture form</h2>
+      <fa-form-lecture [courseKey]="courseKey"></fa-form-lecture>
+    </div>    
   </div>
 </div>
