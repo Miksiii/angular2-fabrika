@@ -11,8 +11,14 @@
   </div>
 </form>
 
-<ul>
-  <li *ngFor="let comment of comments">
-    {{comment?.username}} says: {{comment?.body}}
-  </li>
-</ul>
+<div class="comments">
+  <p class="comments-comment" 
+     *ngFor="let comment of comments">
+      <span class="comments-comment-username">
+          {{comment?.username}}:
+      </span>
+      <span class="comments-comment-message">
+        {{comment?.body}}
+      </span>
+  </p>
+</div>

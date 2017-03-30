@@ -25,11 +25,17 @@ export class FormCommentComponent implements OnInit {
   constructor(private courseService : CourseService) { }
 
   ngOnInit() {
+  }
+
+  // whenever user clicks on new section, 
+  // the courseKey and sectionKey changes
+  ngOnChanges() {
     this.courseService.getCommentsOfCourseSection(this.courseKey, this.sectionKey)
       .then(foo => foo.subscribe(
         comments => {
           this.comments = comments;
-        }
+          console.log(this.comments);
+         }
       ));
     this.comment.username = this.username;
     this.comment.date = new Date();
