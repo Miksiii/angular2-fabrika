@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 @Injectable()
 export class CourseService {
 
-  courses : Observable<any[]>; // $add, $save.. $get
+  courses : Observable<any[]>;
   course : FirebaseObjectObservable<any>;
 
   constructor(
@@ -20,8 +20,30 @@ export class CourseService {
 
   getCourses() : Promise<FirebaseListObservable<Course[]>> {
     return Promise.resolve(this.af.database.list('/courses'));
+  } 
+
+  getMyCourses(userUID) : Promise<FirebaseListObservable<Course[]>> {
+    
+    return Promise.resolve(this.af.database.list('/courses', {
+      query: {
+        orderByChild: `belongs_to/${userUID}/locked`,
+        equalTo: !null
+      }
+    }));
+    /*
+    the idea was to check if key exists (if equalTo not null)
+    return Promise.resolve(this.af.database.list('/courses', {
+      query: {
+        orderByChild: `belongs_to/${userUID}`,
+        equalTo: !null
+      }
+    }));   */
   }
- 
+
+  getCoursesOfUser(userUID) : Promise<FirebaseListObservable<Course[]>> {
+    return Promise.resolve(this.af.database.list('/users/' + userUID + '/courses'));
+  }
+
   getCourseByKey(key : any) : Promise<FirebaseObjectObservable<any>> {
     return Promise.resolve(this.af.database.object(`courses/${key}`));
   }

@@ -21,6 +21,7 @@ import { SignInComponent } from './signin/signin.component';
 import { CourseService} from './course/course.service';
 import { AuthService } from './other/auth.service';
 import { AuthGuard } from './other/auth-guard.service';
+import { ShoppingCartService } from './other/shopping-cart.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { CourseCardComponent } from './course/course-card/course-card.component';
@@ -58,7 +59,8 @@ import { FormCommentComponent } from './dashboard/course-overview/form-comment/f
   providers: [
     CourseService, 
     AuthService,
-    AuthGuard
+    AuthGuard,
+    ShoppingCartService
   ],
   bootstrap: [AppComponent]
 })

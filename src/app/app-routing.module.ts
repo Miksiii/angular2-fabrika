@@ -28,7 +28,7 @@ export const ROUTES = [
   {
     path: 'course/:key/overview',
     component: CourseOverviewComponent, 
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },  
   {
     path: 'create/course',

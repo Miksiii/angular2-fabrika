@@ -5,7 +5,8 @@ import { AuthService } from './../../other/auth.service';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 
 import { Course } from './../../course/course';
-import { CourseService } from './../../course/course.service'
+import { CourseService } from './../../course/course.service';
+import { ShoppingCartService } from './../../other/shopping-cart.service';
 
 @Component({
   selector: 'app-dashboard-main',
@@ -15,19 +16,32 @@ import { CourseService } from './../../course/course.service'
 export class DashboardMainComponent implements OnInit {
 
   courses : FirebaseListObservable<Course[]>;
-  currentUser : FirebaseObjectObservable<any>;
+  currentUser;
 
   constructor(
     private authService : AuthService,
-    private courseService : CourseService,
     private af : AngularFire,
-    private router : Router) {
+    private courseService : CourseService,
+    private shoppingCartService : ShoppingCartService,
+    private router : Router
+  ) {
+    this.af.auth.subscribe(
+      auth => {
+        if(auth) {
+          this.authService.getCurrentUser(auth.uid)
+            .then(foo => foo.subscribe(user => {
+              this.currentUser = user;
+              this.courseService.getMyCourses(this.currentUser.$key)
+                .then(courses => this.courses = courses);
+            }));
+        }
+      }
+    );
 
   }
 
   ngOnInit() {
-    this.courseService.getCourses()
-      .then(courses => this.courses = courses);
+
   }
 
 }

@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable, 
          AuthProviders, AuthMethods } from 'angularfire2';
 
+import { ShoppingCartService } from './shopping-cart.service';
+
 @Injectable()
 export class AuthService {
 
@@ -17,7 +19,8 @@ export class AuthService {
 
   constructor(
     private af : AngularFire,
-    private router : Router
+    private router : Router,
+    private shoppingCartService : ShoppingCartService 
   ) {}
 
   createUser(email : string, password: string) : void {
@@ -63,7 +66,7 @@ export class AuthService {
       method: AuthMethods.Password
     })
     .then(success => {
-      // update and set to variable
+      // add courses and wishlist to the database once user login
       this.toggleAuth(success.uid, true);
       let redirect = this.redirectUrl ? this.redirectUrl : '/dashboard-main';
       this.router.navigate([redirect]);
@@ -94,14 +97,6 @@ export class AuthService {
 
    return isAuthenticated;
   }
- 
-  /*isAuthenticated() : boolean {
-    this.af.database.object(`users/${success.uid}`)
-        .subscribe(user => {
-           console.log("konzulat: " + user.isLoggedIn);
-        });
-    return true;
-  }*/
 
   getCurrentUser(uid : any) : Promise<FirebaseObjectObservable<any>>{
     return Promise.resolve(this.af.database.object(`users/${uid}`));
