@@ -1,4 +1,5 @@
 import 'rxjs/add/operator/take'
+import {Subject} from 'rxjs/Subject';
 import { Observable } from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
 import { Course } from './course';
@@ -23,21 +24,21 @@ export class CourseService {
   } 
 
   getMyCourses(userUID) : Promise<FirebaseListObservable<Course[]>> {
-    
+/*
     return Promise.resolve(this.af.database.list('/courses', {
       query: {
-        orderByChild: `belongs_to/${userUID}/locked`,
-        equalTo: !null
+        orderByChild: `title`,
+        equalTo: "PHP Starter"
       }
     }));
-    /*
-    the idea was to check if key exists (if equalTo not null)
+    */
+   
     return Promise.resolve(this.af.database.list('/courses', {
       query: {
-        orderByChild: `belongs_to/${userUID}`,
-        equalTo: !null
+        orderByChild: `belongs_to/${userUID}/uid`,
+        equalTo: userUID
       }
-    }));   */
+    }));
   }
 
   getCoursesOfUser(userUID) : Promise<FirebaseListObservable<Course[]>> {
@@ -46,6 +47,10 @@ export class CourseService {
 
   getCourseByKey(key : any) : Promise<FirebaseObjectObservable<any>> {
     return Promise.resolve(this.af.database.object(`courses/${key}`));
+  }
+
+  getCourseExtras(courseKey, userUID) : Promise<FirebaseObjectObservable<any>> {
+    return Promise.resolve(this.af.database.object(`courses/${courseKey}/belongs_to/${userUID}`));
   }
 
   getLecturesByCourseKey(key : string) : Promise<FirebaseListObservable<any[]>> {

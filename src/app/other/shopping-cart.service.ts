@@ -17,16 +17,15 @@ export class ShoppingCartService {
   }
 
   addCourse(userUID, courseKey) {
-   /* this.af.database.object('users/' + userUID + '/courses/' + courseKey).set({
-      locked: true,
-    });*/
     this.af.database.object(`/courses/${courseKey}/belongs_to/${userUID}`).set({
+      uid: userUID,
       locked: true
     });    
   }
 
   addCourseToWishList(userUID, courseKey) {
     this.af.database.object('users/' + userUID + '/wishlist/' + courseKey).set({
+      uid: userUID,
       locked: true
     });
   }

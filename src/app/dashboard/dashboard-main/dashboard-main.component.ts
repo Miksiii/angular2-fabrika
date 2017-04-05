@@ -32,7 +32,10 @@ export class DashboardMainComponent implements OnInit {
             .then(foo => foo.subscribe(user => {
               this.currentUser = user;
               this.courseService.getMyCourses(this.currentUser.$key)
-                .then(courses => this.courses = courses);
+                .then(courses => {
+                  this.courses = courses;  
+                  console.log(this.courses);
+                });
             }));
         }
       }
