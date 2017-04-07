@@ -1,3 +1,7 @@
-<p>
-  wishlist works!
-</p>
+<div class="col-md-12">
+  <fa-course-card 
+    *ngFor="let course of courses | async" 
+    [course]="course"
+    [routeContext]="'detail'">
+  </fa-course-card>
+</div>

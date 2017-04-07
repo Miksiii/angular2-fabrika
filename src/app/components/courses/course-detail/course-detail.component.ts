@@ -8,7 +8,6 @@ import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
 // Custom components
 import { CourseService } from './../../../services/course.service';
 import { AuthService } from './../../../services/auth.service';
-import { ShoppingCartService } from './../../../services/shopping-cart.service';
 
 @Component({
   selector: 'fa-course-detail',
@@ -24,8 +23,7 @@ export class CourseDetailComponent implements OnInit {
 
   constructor(
     private route : ActivatedRoute,
-    private courseService : CourseService, 
-    private shoppingCartService : ShoppingCartService,
+    private courseService : CourseService,
     private authService : AuthService,
     private af : AngularFire
   ) { }
@@ -55,21 +53,21 @@ export class CourseDetailComponent implements OnInit {
 
   addCourse(courseKey) {
     if(this.currentUser) {
-      this.shoppingCartService.addCourse(this.currentUser.$key, courseKey);
+      this.courseService.addCourse(this.currentUser.$key, courseKey);
       return;
     }
 
-    this.shoppingCartService.myCoursesList.push(courseKey);
+    this.courseService.myCoursesList.push(courseKey);
 
   }
 
   addCourseToWishList(courseKey) {
     if(this.currentUser) {  
-      this.shoppingCartService.addCourseToWishList(this.currentUser.$key, courseKey);
+      this.courseService.addCourseToWishList(this.currentUser.$key, courseKey);
       return;
     }
 
-    this.shoppingCartService.coursesWishList.push(courseKey); 
+    this.courseService.coursesWishList.push(courseKey); 
   }
 
 }

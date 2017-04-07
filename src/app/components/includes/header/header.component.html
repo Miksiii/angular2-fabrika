@@ -31,6 +31,11 @@
     <ul class="nav navbar-nav navbar-collapse"
       *ngIf="currentUser && (currentUser?.role === 'user')">
       <li>
+        <a routerLink="/browse" routerLinkActive="active">
+          Browse
+        </a>
+      </li>      
+      <li>
         <a routerLink="/dashboard/main" routerLinkActive="active">
           Dashboard
         </a>

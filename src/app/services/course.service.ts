@@ -13,17 +13,30 @@ export class CourseService {
 
   courses : Observable<any[]>;
   course : FirebaseObjectObservable<any>;
+  coursesWishList : string[];
+  myCoursesList : string[];  
 
   constructor(
     private af : AngularFire,
     private router : Router
   ) {
+    this.coursesWishList = [];
+    this.myCoursesList = [];    
     this.courses = this.af.database.list('/courses');
   }
 
   getCourses() : Promise<FirebaseListObservable<any[]>> {
     return Promise.resolve(this.af.database.list('/courses'));
   } 
+
+  getWishListOfUserWithID(userID) : Promise<FirebaseListObservable<any[]>> {
+    return Promise.resolve(this.af.database.list('/courses', {
+      query: {
+        orderByChild: `saved_by/${userID}/uid`,
+        equalTo: userID
+      }
+    }));
+  }
 
   getMyCourses(userUID) : Promise<FirebaseListObservable<any[]>> {
     return Promise.resolve(this.af.database.list('/courses', {
@@ -96,6 +109,19 @@ export class CourseService {
       username: comment.username,
       body: comment.body,
       date: comment.date
+    });
+  }
+
+  addCourse(userUID, courseKey) {
+    this.af.database.object(`/courses/${courseKey}/belongs_to/${userUID}`).set({
+      uid: userUID,
+      locked: true
+    });    
+  }
+
+  addCourseToWishList(userUID, courseKey) {
+    this.af.database.object(`/courses/${courseKey}/saved_by/${userUID}`).set({
+      uid: userUID
     });
   }
 

@@ -1,4 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { 
+  AngularFire, 
+  FirebaseListObservable, 
+  FirebaseObjectObservable 
+} from 'angularfire2';
+
+// Custom components
+import { AuthService } from './../../../../services/auth.service';
+import { CourseService } from './../../../../services/course.service';
 
 @Component({
   selector: 'app-wishlist',
@@ -7,7 +17,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WishlistComponent implements OnInit {
 
-  constructor() { }
+  courses : FirebaseListObservable<any[]>;
+  currentUser : any = null;
+
+  constructor(
+    private af : AngularFire,
+    private authService : AuthService,    
+    private courseService : CourseService,
+    private router : Router
+  ) {
+    this.af.auth.subscribe(
+      auth => {
+        if(auth) {
+          this.authService.getCurrentUser(auth.uid)
+            .then(foo => foo.subscribe(user => {
+              this.currentUser = user;
+              this.courseService.getWishListOfUserWithID(this.currentUser.$key)
+                .then(courses => {
+                  this.courses = courses;  
+                });
+            }));
+        } else {
+          this.af.auth.logout();
+        }
+    });
+  }
 
   ngOnInit() {
   }

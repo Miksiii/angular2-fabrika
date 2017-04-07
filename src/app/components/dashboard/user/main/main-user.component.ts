@@ -9,7 +9,6 @@ import {
 // Custom components
 import { AuthService } from './../../../../services/auth.service';
 import { CourseService } from './../../../../services/course.service';
-import { ShoppingCartService } from './../../../../services/shopping-cart.service';
 
 @Component({
   selector: 'app-main-user',
@@ -25,7 +24,6 @@ export class DashboardMainUserComponent implements OnInit {
     private authService : AuthService,
     private af : AngularFire,
     private courseService : CourseService,
-    private shoppingCartService : ShoppingCartService,
     private router : Router
   ) {
     this.af.auth.subscribe(

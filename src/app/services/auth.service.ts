@@ -11,7 +11,6 @@ import {
   AuthMethods 
 } from 'angularfire2';
 
-import { ShoppingCartService } from './shopping-cart.service';
 
 @Injectable()
 export class AuthService {
@@ -24,8 +23,7 @@ export class AuthService {
 
   constructor(
     private af : AngularFire,
-    private router : Router,
-    private shoppingCartService : ShoppingCartService 
+    private router : Router
   ) {}
 
   createUser(email : string, password: string) : void {

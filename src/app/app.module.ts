@@ -17,7 +17,6 @@ export const firebaseConfig = {
 import { CourseService} from './services/course.service';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/auth-guard.service';
-import { ShoppingCartService } from './services/shopping-cart.service';
 
 // Components/Includes 
 import { HeaderComponent } from './components/includes/header/header.component';
@@ -79,8 +78,7 @@ import { AppRoutingModule } from './app-routing.module';
   providers: [
     CourseService, 
     AuthService,
-    AuthGuard,
-    ShoppingCartService
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })
