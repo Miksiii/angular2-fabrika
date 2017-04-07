@@ -14,15 +14,15 @@ import {
 } from 'angularfire2';
 
 // Custom components
-import { CourseService } from './../../services/course.service';
-import { AuthService } from './../../services/auth.service';
+import { CourseService } from './../../../../services/course.service';
+import { AuthService } from './../../../../services/auth.service';
 
 @Component({
   selector: 'app-course-overview',
   templateUrl: './course-overview.component.html',
   styleUrls: ['./course-overview.component.less']
 })
-export class CourseOverviewComponent implements OnInit {
+export class CourseOverviewAdminComponent implements OnInit {
 
   course : any;
   sectionActive : any;

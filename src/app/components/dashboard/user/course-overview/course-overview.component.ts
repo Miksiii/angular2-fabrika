@@ -22,7 +22,7 @@ import { CourseService } from './../../../../services/course.service';
   templateUrl: './course-overview.component.html',
   styleUrls: ['./course-overview.component.less']
 })
-export class CourseOverviewComponent implements OnInit {
+export class CourseOverviewUserComponent implements OnInit {
 
   course : any;
   sectionActive : any;

@@ -1,36 +1,65 @@
 <nav class="navbar navbar-default fa-navbar">
   <div class="container-fluid">
+
+    <!-- brand -->
     <div class="navbar-header">
-      <!--<img alt="Brand" src="...">-->
       <a class="navbar-brand" href="#">FabrikaRS</a>
     </div>
-    <ul class="nav navbar-nav navbar-collapse">
+
+    <!-- Navigation without authentication on the left -->
+    <ul class="nav navbar-nav navbar-collapse"
+      *ngIf="currentUser === null">
       <li>
-        <a routerLink="/courses" routerLinkActive="active">
+        <a routerLink="/browse" routerLinkActive="active">
           Browse
         </a>
       </li>
-      <li>
-        <a routerLink="/create/course" routerLinkActive="active" 
-          *ngIf="authObject && (currentUser?.role === 'admin')">
-          Create 
-        </a>
-      </li>
-      <li>
-        <a routerLink="/dashboard-main" routerLinkActive="active" *ngIf="authObject !== null">
-          Dashboard
-        </a>
-      </li>
     </ul>
-    <ul class="nav navbar-nav navbar-right fa-navbar-right" *ngIf="authObject === null">
+
+    <!-- Navigation without authentication on the right -->
+    <ul class="nav navbar-nav navbar-right fa-navbar-right" 
+      *ngIf="currentUser === null">
       <li>
         <a routerLink="signup" routerLinkActive="active" class="fa-navbar-right-register">Sign Up</a>
       </li>
       <li>
         <a routerLink="signin" class="fa-navbar-right-login">Sign In</a>
       </li>
-    </ul>    
-    <ul class="nav navbar-nav navbar-right fa-navbar-right" *ngIf="authObject !== null">
+    </ul>  
+
+    <!-- navigation with authentication of role user -->
+    <ul class="nav navbar-nav navbar-collapse"
+      *ngIf="currentUser && (currentUser?.role === 'user')">
+      <li>
+        <a routerLink="/dashboard/main" routerLinkActive="active">
+          Dashboard
+        </a>
+      </li>
+      <li>
+        <a routerLink="/dashboard/wishlist" routerLinkActive="active">
+          Wishlist
+        </a>
+      </li>      
+    </ul> 
+
+    <!-- navigation with authentication of role admin -->
+    <ul class="nav navbar-nav navbar-collapse"
+      *ngIf="currentUser && (currentUser?.role === 'admin')">
+      <li>
+        <a routerLink="/admin/dashboard/main" routerLinkActive="active">
+          Dashboard
+        </a>
+      </li>      
+      <li>
+        <a routerLink="/admin/dashboard/course/create" routerLinkActive="active">
+          + Course
+        </a>
+      </li>       
+    </ul>       
+
+    <!-- Logout dropdown -->
+    <ul class="nav navbar-nav navbar-right fa-navbar-right" 
+      *ngIf="currentUser !== null">
       <li class="dropdown">
         <a href="properties.php?type=showall" class="dropdown-toggle" data-toggle="dropdown">
           {{currentUser?.email}}

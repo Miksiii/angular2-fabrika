@@ -7,16 +7,16 @@ import {
 } from 'angularfire2';
 
 // Custom components
-import { AuthService } from './../../services/auth.service';
-import { CourseService } from './../../services/course.service';
-import { ShoppingCartService } from './../../services/shopping-cart.service';
+import { AuthService } from './../../../../services/auth.service';
+import { CourseService } from './../../../../services/course.service';
+import { ShoppingCartService } from './../../../../services/shopping-cart.service';
 
 @Component({
-  selector: 'app-dashboard-main',
-  templateUrl: './dashboard-main.component.html',
-  styleUrls: ['./dashboard-main.component.less']
+  selector: 'app-main-user',
+  templateUrl: './main-user.component.html',
+  styleUrls: ['./main-user.component.less']
 })
-export class DashboardMainComponent implements OnInit {
+export class DashboardMainUserComponent implements OnInit {
 
   courses : FirebaseListObservable<any[]>;
   currentUser;

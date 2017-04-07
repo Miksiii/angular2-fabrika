@@ -33,8 +33,14 @@ import { CourseDetailComponent } from './components/courses/course-detail/course
 import { CourseCardComponent } from './components/courses/course-card/course-card.component';
 
 // Components/Dashboard/User
-import { DashboardMainComponent } from './components/dashboard/user/dashboard-main/dashboard-main.component';
-import { CourseOverviewComponent } from './components/dashboard/user/course-overview/course-overview.component';
+import { DashboardMainUserComponent } from './components/dashboard/user/main/main-user.component';
+import { WishlistComponent } from './components/dashboard/user/wishlist/wishlist.component';
+import { CourseOverviewUserComponent } from './components/dashboard/user/course-overview/course-overview.component';
+
+// Components/Dashboard/Admin
+import { DashboardMainAdminComponent } from './components/dashboard/admin/main/main-admin.component';
+import { CourseCreateComponent } from './components/dashboard/admin/course-create/course-create.component';
+import { CourseOverviewAdminComponent } from './components/dashboard/admin/course-overview/course-overview.component';
 
 import { FormLectureComponent } from './dashboard/course-overview/form-lecture/form-lecture.component';
 import { FormSectionComponent } from './dashboard/course-overview/form-section/form-section.component';
@@ -42,7 +48,6 @@ import { FormCommentComponent } from './dashboard/course-overview/form-comment/f
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { CourseCreateComponent } from './course/course-create/course-create.component';
 
 @NgModule({
   declarations: [
@@ -54,12 +59,15 @@ import { CourseCreateComponent } from './course/course-create/course-create.comp
     SignUpComponent,
     SignInComponent,
     CourseCardComponent,
-    DashboardMainComponent,
-    CourseOverviewComponent,
+    DashboardMainUserComponent,
+    DashboardMainAdminComponent,
+    CourseOverviewUserComponent,
+    CourseOverviewAdminComponent,
     CourseCreateComponent,
     FormLectureComponent,
     FormSectionComponent,
-    FormCommentComponent
+    FormCommentComponent,
+    WishlistComponent
   ],
   imports: [
     BrowserModule,

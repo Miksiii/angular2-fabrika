@@ -12,11 +12,11 @@ import { CourseService } from './../../../../services/course.service';
 import { ShoppingCartService } from './../../../../services/shopping-cart.service';
 
 @Component({
-  selector: 'app-dashboard-main',
-  templateUrl: './dashboard-main.component.html',
-  styleUrls: ['./dashboard-main.component.less']
+  selector: 'app-main-admin',
+  templateUrl: './main-admin.component.html',
+  styleUrls: ['./main-admin.component.less']
 })
-export class DashboardMainComponent implements OnInit {
+export class DashboardMainAdminComponent implements OnInit {
 
   courses : FirebaseListObservable<any[]>;
   currentUser;

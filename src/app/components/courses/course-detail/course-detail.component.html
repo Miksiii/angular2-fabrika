@@ -14,7 +14,7 @@
     <div class="fa-course-detail-description-options">
       <a class="btn fa-course-detail-description-options-buy"
         (click)="addCourse(course?.$key)"
-        [routerLink]="['/course/', course?.$key, 'overview']">
+        [routerLink]="['/dashboard/course/', course?.$key, 'overview']">
         START LEARNING NOW {{course?.price}} RSD
       </a>
       <a class="btn fa-course-detail-description-options-wishlist"

@@ -3,8 +3,13 @@ import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { AngularFire, FirebaseListObservable, FirebaseObjectObservable, 
-         AuthProviders, AuthMethods } from 'angularfire2';
+import { 
+  AngularFire, 
+  FirebaseListObservable, 
+  FirebaseObjectObservable, 
+  AuthProviders, 
+  AuthMethods 
+} from 'angularfire2';
 
 import { ShoppingCartService } from './shopping-cart.service';
 
@@ -66,10 +71,20 @@ export class AuthService {
       method: AuthMethods.Password
     })
     .then(success => {
-      // add courses and wishlist to the database once user login
       this.toggleAuth(success.uid, true);
-      let redirect = this.redirectUrl ? this.redirectUrl : '/dashboard-main';
-      this.router.navigate([redirect]);
+      this.getCurrentUser(success.uid)
+        .then(foo => foo.subscribe(user => {
+          this.currentUser = user;
+          let redirect = this.redirectUrl ? this.redirectUrl : '/dashboard/main';
+
+          if(this.currentUser.role === 'admin') {
+            this.router.navigate(['admin/dashboard/main']);
+            return;
+          }
+
+          this.router.navigate(['/dashboard/main']);
+
+        }))
     })
     .catch(error => {
       console.log(error.message);
@@ -106,7 +121,7 @@ export class AuthService {
     this.currentUser = null;
     this.toggleAuth(uid, false);
     this.af.auth.logout();
-    this.router.navigate(['courses']);
+    this.router.navigate(['browse']);
   }
 
 }

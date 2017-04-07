@@ -7,33 +7,56 @@ import { SignUpComponent } from './components/auth/sign-up/sign-up.component';
 import { CoursesComponent } from './components/courses/courses.component';
 import { CourseDetailComponent } from './components/courses/course-detail/course-detail.component';
 import { CourseCardComponent } from './components/courses/course-card/course-card.component';
-import { DashboardMainComponent } from './components/dashboard/user/dashboard-main/dashboard-main.component';
-import { CourseOverviewComponent } from './components/dashboard/user/course-overview/course-overview.component';
+import { DashboardMainUserComponent } from './components/dashboard/user/main/main-user.component';
+import { WishlistComponent } from './components/dashboard/user/wishlist/wishlist.component';
+import { CourseOverviewUserComponent } from './components/dashboard/user/course-overview/course-overview.component';
+import { CourseOverviewAdminComponent } from './components/dashboard/admin/course-overview/course-overview.component';
+import { DashboardMainAdminComponent } from './components/dashboard/admin/main/main-admin.component';
+import { CourseCreateComponent } from './components/dashboard/admin/course-create/course-create.component';
 
 import { AuthGuard } from './services/auth-guard.service';
-import { CourseCreateComponent } from './course/course-create/course-create.component';
 
 export const ROUTES = [
   {
-    path: 'courses',
+    path: 'browse',
     component: CoursesComponent
   },
+  {
+    path: 'browse/course/:key',
+    component: CourseDetailComponent
+  },
+  {
+    path: 'dashboard/main',
+    component: DashboardMainUserComponent, 
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'admin/dashboard/main',
+    component: DashboardMainAdminComponent, 
+    canActivate: [AuthGuard]
+  },  
+  {
+    path: 'dashboard/wishlist',
+    component: WishlistComponent, 
+    canActivate: [AuthGuard]
+  },  
   {
     path: '',
     redirectTo: 'courses',
     pathMatch: 'full'
   },
   {
-    path: 'course/:key',
-    component: CourseDetailComponent
-  },
-  {
-    path: 'course/:key/overview',
-    component: CourseOverviewComponent, 
+    path: 'dashboard/course/:key/overview',
+    component: CourseOverviewUserComponent, 
     canActivate: [AuthGuard]
   },  
   {
-    path: 'create/course',
+    path: 'admin/dashboard/course/:key/overview',
+    component: CourseOverviewAdminComponent, 
+    canActivate: [AuthGuard]
+  },    
+  {
+    path: 'admin/dashboard/course/create',
     component: CourseCreateComponent
   },
   {
@@ -44,11 +67,6 @@ export const ROUTES = [
     path: 'signup',
     component: SignUpComponent
   },
-  {
-    path: 'dashboard-main',
-    component: DashboardMainComponent, 
-    canActivate: [AuthGuard]
-  }   
 ];
 
 @NgModule({

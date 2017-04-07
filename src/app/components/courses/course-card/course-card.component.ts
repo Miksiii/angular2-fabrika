@@ -52,10 +52,10 @@ export class CourseCardComponent implements OnInit {
   goToContext() {
     switch(this.routeContext) {
       case 'detail':
-        this.router.navigate(['/course/', this.course.$key]);
+        this.router.navigate(['/browse/course/', this.course.$key]);
         break;
       case 'overview':
-        this.router.navigate(['/course/', this.course.$key, 'overview']);
+        this.router.navigate(['/dashboard/course/', this.course.$key, 'overview']);
         break;
     }
   }

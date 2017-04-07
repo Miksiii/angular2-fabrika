@@ -1,4 +1,5 @@
-import { Component, OnInit, Input} from '@angular/core';
+import { SimpleChange, Component, OnInit, Input} from '@angular/core';
+import { AngularFire } from 'angularfire2';
 
 // Custom components
 import { AuthService } from './../../../services/auth.service';
@@ -10,12 +11,24 @@ import { AuthService } from './../../../services/auth.service';
 })
 export class HeaderComponent implements OnInit {
 
-  @Input()
-  authObject;
-  @Input() 
-  currentUser;
+  currentUser : any = null;
 
-  constructor(private authService : AuthService) { 
+  constructor(
+    private authService : AuthService,
+    private af : AngularFire,
+  ) {
+    this.af.auth.subscribe(
+      isAuthenticated => {
+        if(isAuthenticated) {
+          this.authService.getCurrentUser(isAuthenticated.uid)
+            .then(foo => foo.subscribe(user => {
+              this.currentUser = user;
+            }));
+        } else {
+           this.currentUser = null;
+        }
+      }
+    );
   }
 
   ngOnInit() {

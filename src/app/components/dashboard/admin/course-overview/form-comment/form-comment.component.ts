@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 // Custom components
-import { CourseService } from './../../../services/course.service';
+import { CourseService } from './../../../../../services/course.service';
 
 @Component({
   selector: 'fa-form-comment',
