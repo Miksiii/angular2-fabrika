@@ -7,9 +7,9 @@ import {
 } from 'angularfire2';
 
 // Custom components
-import { AuthService } from './../../services/auth.service';
-import { CourseService } from './../../services/course.service';
-import { ShoppingCartService } from './../../services/shopping-cart.service';
+import { AuthService } from './../../../../services/auth.service';
+import { CourseService } from './../../../../services/course.service';
+import { ShoppingCartService } from './../../../../services/shopping-cart.service';
 
 @Component({
   selector: 'app-dashboard-main',

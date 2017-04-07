@@ -1,15 +1,17 @@
 import { NgModule } from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-import { AuthGuard }                from './other/auth-guard.service';
+// Custom components
+import { SignInComponent } from './components/auth/sign-in/sign-in.component';
+import { SignUpComponent } from './components/auth/sign-up/sign-up.component';
+import { CoursesComponent } from './components/courses/courses.component';
+import { CourseDetailComponent } from './components/courses/course-detail/course-detail.component';
+import { CourseCardComponent } from './components/courses/course-card/course-card.component';
+import { DashboardMainComponent } from './components/dashboard/user/dashboard-main/dashboard-main.component';
+import { CourseOverviewComponent } from './components/dashboard/user/course-overview/course-overview.component';
 
-import { CoursesComponent } from './course/courses/courses.component';
+import { AuthGuard } from './services/auth-guard.service';
 import { CourseCreateComponent } from './course/course-create/course-create.component';
-import { CourseDetailComponent } from './course/course-detail/course-detail.component';
-import { SignInComponent } from './signin/signin.component';
-import { SignUpComponent } from './signup/signup.component';
-import { DashboardMainComponent } from './dashboard/dashboard-main/dashboard-main.component';
-import { CourseOverviewComponent } from './dashboard/course-overview/course-overview.component';
 
 export const ROUTES = [
   {

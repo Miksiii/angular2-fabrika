@@ -1,8 +1,9 @@
 import { Component, Input, OnInit} from '@angular/core';
-import { CoursesComponent } from './course/courses/courses.component';
 import { Router } from '@angular/router';
 
-import { AuthService } from './other/auth.service';
+// Custom components
+import { AuthService } from './services/auth.service';
+import { CoursesComponent } from './course/courses/courses.component';
 import { AngularFire } from 'angularfire2';
 
 @Component({

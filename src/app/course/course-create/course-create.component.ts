@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { CourseService } from './../course.service';
-import { Course } from './../course';
+// Custom components
+import { CourseService } from './../../services/course.service';
 
 @Component({
   selector: 'fa-course-create',
@@ -10,17 +10,23 @@ import { Course } from './../course';
 })
 export class CourseCreateComponent implements OnInit {
 
-  course; 
+  course = {
+    title: '',
+    excerpt: '',
+    description: '',
+    price: '',
+    thumbnail: ''
+  }
 
   constructor(private courseService : CourseService) { }
 
   ngOnInit() {
-    this.course = new Course('', '', '', '');
+    //this.course = new Course('', '', '', '');
   }
 
   createCourse() {
     this.courseService.createCourse(this.course);
-    this.course = new Course('', '', '', '');
+    //this.course = new Course('', '', '', '');
   }
 
 }
