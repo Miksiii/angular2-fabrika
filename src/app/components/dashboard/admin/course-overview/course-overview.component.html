@@ -1,15 +1,7 @@
-<div class="col-md-12 alert alert-danger"
-  [hidden]="!course?.extras?.locked">
-  <h3>Ooops</h3>
-  <p>Looks like you are not yet allowed to see the course. To access the course please confirm your subscription to support@fabrika.rs</p>
-
-  <a (click)="back()">Go to dashboard</a>
-</div>
-
+<a (click)="back()">Go to dashboard</a>
 
 <!-- Aside menu with lectures, sections and options -->
-<div class="col-md-12 fa-course-overview" 
-  [hidden]="course?.extras?.locked">
+<div class="col-md-12 fa-course-overview">
 
   <!-- affix -->
   <div class="col-md-4 fa-course-overview-affix">
@@ -37,8 +29,7 @@
           </li> <!-- single section ends -->
 
           <!-- admin options for section -->
-          <li class="fa-course-overview-affix-ul-lectures-lecture-sections-section"
-            *ngIf="currentUser?.role === 'admin'">
+          <li class="fa-course-overview-affix-ul-lectures-lecture-sections-section">
               <i class="fa fa-plus" aria-hidden="true"
                 (click)="displayFormSection(lecture?.$key)"> New </i>
           </li>
@@ -46,8 +37,7 @@
       </li> <!-- single lecture ends -->
 
       <!-- admin options -->
-      <li class="fa-course-overview-affix-preview-item"
-        *ngIf="currentUser?.role === 'admin'">
+      <li class="fa-course-overview-affix-preview-item">
           <i class="fa fa-plus" aria-hidden="true"
             (click)="displayFormLecture(course?.$key)"> New Lecture </i>  
       </li>
@@ -69,15 +59,6 @@
           [username]="currentUser?.username">
         </fa-form-comment>
       </div>
-    </div>
-
-    <!-- Welcome screen -->
-    <div *ngIf="!sectionActive && sectionActive !== null" class="fa-course-overview-content-wellcome">
-      <h1>{{course?.title}}</h1>
-      <h2>{{course?.excerpt}}</h2>
-      <button class="fa-course-overview-content-wellcome-btn-start">
-        CONTINUE 
-      </button>
     </div>
 
     <!-- section form --> 

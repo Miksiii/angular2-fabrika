@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -47,6 +48,7 @@ import { FormCommentComponent } from './dashboard/course-overview/form-comment/f
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { SubSetPipe } from './pipes/subset-pipe.pipe';
 
 @NgModule({
   declarations: [
@@ -66,7 +68,8 @@ import { AppRoutingModule } from './app-routing.module';
     FormLectureComponent,
     FormSectionComponent,
     FormCommentComponent,
-    WishlistComponent
+    WishlistComponent,
+    SubSetPipe
   ],
   imports: [
     BrowserModule,

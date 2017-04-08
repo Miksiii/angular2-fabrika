@@ -40,12 +40,6 @@ export class DashboardMainUserComponent implements OnInit {
                   });
               }
 
-              if (this.currentUser.role === 'admin') {
-                this.courseService.getCoursesOfAuthor(this.currentUser.$key)
-                  .then(courses => {
-                    this.courses = courses; 
-                  });
-              }
             }));
         }
       }

@@ -73,7 +73,7 @@ export class AuthService {
       this.getCurrentUser(success.uid)
         .then(foo => foo.subscribe(user => {
           this.currentUser = user;
-          let redirect = this.redirectUrl ? this.redirectUrl : '/dashboard/main';
+          //let redirect = this.redirectUrl ? this.redirectUrl : '/dashboard/main';
 
           if(this.currentUser.role === 'admin') {
             this.router.navigate(['admin/dashboard/main']);
@@ -96,16 +96,16 @@ export class AuthService {
      .then(user => this.currentUser = user);
   }
 
+  // regards this we find out whether the auth-guard
+  // should redirect if no access
   isAuthenticated() : boolean {
-    let isAuthenticated;
+    let isAuthenticated = false;
 
     this.af.auth.subscribe(
       auth => {
         if(auth) {
           isAuthenticated = true;
-        } else {
-          isAuthenticated = false;
-        }
+        } 
       });
 
    return isAuthenticated;

@@ -1,1 +1,23 @@
-admin main!!!
+<div class="col-md-12">
+  <ul>
+    <li *ngFor="let course of courses">
+
+      Title: <a [routerLink]="['/admin/dashboard/course/', course?.$key, 'overview']"> {{course?.title}}</a> <br/>
+      Comments: {{course?.numberOfComments}}
+      Students: {{course?.numberOfStudents}}
+      <ul>
+        <li *ngFor="let student of course?.belongs_to | subsetpipe">
+          #UID: {{student.value.uid}} wants to start with your course!
+          <button 
+            [ngClass]="(student.value.locked) ? 'btn btn-success' : 'btn btn-danger'"
+            (click)="toggleLock(course?.$key, student.value.uid, student.value.locked)">
+            {{(student.value.locked) ? "UNLOCK" : "LOCK"}}
+          </button>
+        </li>
+      </ul>
+
+      <hr>
+    </li>
+  </ul>
+
+</div>

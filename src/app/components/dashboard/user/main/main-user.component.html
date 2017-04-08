@@ -10,17 +10,3 @@
     [routeContext]="'overview'">
   </fa-course-card>
 </div>
-
-<div class="col-md-12"
-  [hidden]="currentUser?.role === 'user'">
-  <ul>
-    <li *ngFor="let course of courses | async">
-      {{course?.title}}
-      <ul>
-        <li>user mixi wants to access your course  -  approve/decline</li>
-      </ul>
-    </li>
-  </ul>
-
-</div>
-

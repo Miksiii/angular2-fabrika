@@ -29,37 +29,6 @@ export class CourseService {
     return Promise.resolve(this.af.database.list('/courses'));
   } 
 
-  getWishListOfUserWithID(userID) : Promise<FirebaseListObservable<any[]>> {
-    return Promise.resolve(this.af.database.list('/courses', {
-      query: {
-        orderByChild: `saved_by/${userID}/uid`,
-        equalTo: userID
-      }
-    }));
-  }
-
-  getMyCourses(userUID) : Promise<FirebaseListObservable<any[]>> {
-    return Promise.resolve(this.af.database.list('/courses', {
-      query: {
-        orderByChild: `belongs_to/${userUID}/uid`,
-        equalTo: userUID
-      }
-    }));
-  }
-
-  getCoursesOfAuthor(authorID) : Promise<FirebaseListObservable<any[]>> {
-    return Promise.resolve(this.af.database.list('/courses', {
-      query: {
-        orderByChild: 'created_by',
-        equalTo: authorID
-      }
-    }));    
-  }
-
-  getCoursesOfUser(userUID) : Promise<FirebaseListObservable<any[]>> {
-    return Promise.resolve(this.af.database.list('/users/' + userUID + '/courses'));
-  }
-
   getCourseByKey(key : any) : Promise<FirebaseObjectObservable<any>> {
     return Promise.resolve(this.af.database.object(`courses/${key}`));
   }
@@ -78,6 +47,37 @@ export class CourseService {
 
   getCommentsOfCourseSection(courseKey : string, sectionKey) : Promise<FirebaseListObservable<any[]>> {
     return Promise.resolve(this.af.database.list(`comments/${courseKey}/${sectionKey}`));
+  }
+
+  getWishListOfUserWithID(userID) : Promise<FirebaseListObservable<any[]>> {
+    return Promise.resolve(this.af.database.list('/courses', {
+      query: {
+        orderByChild: `saved_by/${userID}/uid`,
+        equalTo: userID
+      }
+    }));
+  }
+
+  getMyCourses(userUID) : Promise<FirebaseListObservable<any[]>> {
+    return Promise.resolve(this.af.database.list('/courses', {
+      query: {
+        orderByChild: `belongs_to/${userUID}/uid`,
+        equalTo: userUID
+      }
+    }));
+  }
+
+  getCoursesByAuthor(authorID) : Promise<FirebaseListObservable<any[]>> {
+    return Promise.resolve(this.af.database.list('/courses', {
+      query: {
+        orderByChild: 'created_by',
+        equalTo: authorID
+      }
+    }));    
+  }
+
+  getCoursesOfUser(userUID) : Promise<FirebaseListObservable<any[]>> {
+    return Promise.resolve(this.af.database.list('/users/' + userUID + '/courses'));
   }
 
   createCourse(course) {
@@ -112,6 +112,11 @@ export class CourseService {
     });
   }
 
+  getCommentsByCourse(courseKey) {
+    return Promise.resolve(this.af.database.list(`comments/${courseKey}`));
+  }
+
+  //shopping cart!
   addCourse(userUID, courseKey) {
     this.af.database.object(`/courses/${courseKey}/belongs_to/${userUID}`).set({
       uid: userUID,
@@ -119,11 +124,16 @@ export class CourseService {
     });    
   }
 
-  addCourseToWishList(userUID, courseKey) {
-    this.af.database.object(`/courses/${courseKey}/saved_by/${userUID}`).set({
-      uid: userUID
+  addCourseToWishList(userKey, courseKey) {
+    this.af.database.object(`/courses/${courseKey}/saved_by/${userKey}`).set({
+      uid: userKey
     });
   }
 
+  toggleLock(courseKey, userKey, lock) {
+    this.af.database.object(`/courses/${courseKey}/belongs_to/${userKey}`).update({
+      locked: lock
+    });
+  }
 
 }

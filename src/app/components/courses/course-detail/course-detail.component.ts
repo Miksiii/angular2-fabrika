@@ -3,7 +3,10 @@ import {Observable} from 'rxjs/Rx';
 
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
+import { 
+  AngularFire, 
+  FirebaseObjectObservable
+} from 'angularfire2';
 
 // Custom components
 import { CourseService } from './../../../services/course.service';
@@ -20,6 +23,7 @@ export class CourseDetailComponent implements OnInit {
   courseKey : any;
   courses : any;
   currentUser;
+  clicked = 'off';
 
   constructor(
     private route : ActivatedRoute,
@@ -62,6 +66,8 @@ export class CourseDetailComponent implements OnInit {
   }
 
   addCourseToWishList(courseKey) {
+    this.clicked = 'off';
+
     if(this.currentUser) {  
       this.courseService.addCourseToWishList(this.currentUser.$key, courseKey);
       return;

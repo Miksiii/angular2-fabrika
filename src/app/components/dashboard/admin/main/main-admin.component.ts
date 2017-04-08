@@ -17,8 +17,8 @@ import { CourseService } from './../../../../services/course.service';
 })
 export class DashboardMainAdminComponent implements OnInit {
 
-  courses : FirebaseListObservable<any[]>;
-  currentUser;
+  courses : any[];
+  currentUser : any = null;
 
   constructor(
     private authService : AuthService,
@@ -32,29 +32,44 @@ export class DashboardMainAdminComponent implements OnInit {
           this.authService.getCurrentUser(auth.uid)
             .then(foo => foo.subscribe(user => {
               this.currentUser = user;
+              this.courseService.getCoursesByAuthor(this.currentUser.$key)
+                .then(foo => foo.subscribe(courses => {
+                  this.courses = courses;
 
-              if(this.currentUser.role === "user") {
-                this.courseService.getMyCourses(this.currentUser.$key)
-                  .then(courses => {
-                    this.courses = courses;  
-                  });
-              }
+                  // Get count of comments & students per course and bind the value
+                  // to the single course (course.numberOfComments property)
+                  for(let i = 0; i < this.courses.length; i++) {
+                    this.courseService.getCommentsByCourse(this.courses[i].$key)
+                      .then(foo => foo.subscribe(comments => {
+                        this.courses[i].numberOfComments = comments.length;
+                      }));
+                    
+                    this.courses[i].numberOfStudents = this.getObjectLength(this.courses[i].belongs_to);
+                  }
 
-              if (this.currentUser.role === 'admin') {
-                this.courseService.getCoursesOfAuthor(this.currentUser.$key)
-                  .then(courses => {
-                    this.courses = courses; 
-                  });
-              }
+                }));              
             }));
+        } else {
+          this.af.auth.logout();
         }
       }
     );
-
   }
 
   ngOnInit() {
-
   }
 
+  getObjectLength(obj) {
+    let count = 0;
+
+    for(let prop in obj) {
+      if (obj.hasOwnProperty(prop)) count++;
+    }
+
+    return count;
+  }
+
+  toggleLock(courseKey, userKey, lock) {
+    this.courseService.toggleLock(courseKey, userKey, !lock);
+  }
 }
