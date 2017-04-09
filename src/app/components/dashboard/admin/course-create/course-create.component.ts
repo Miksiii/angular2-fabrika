@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 
 // Custom components
 import { CourseService } from './../../../../services/course.service';
@@ -21,12 +21,14 @@ export class CourseCreateComponent implements OnInit {
   constructor(private courseService : CourseService) { }
 
   ngOnInit() {
-    //this.course = new Course('', '', '', '');
+  }
+
+  fileAttached($event) {
+    this.course.thumbnail = $event.target.files[0];
   }
 
   createCourse() {
     this.courseService.createCourse(this.course);
-    //this.course = new Course('', '', '', '');
   }
 
 }

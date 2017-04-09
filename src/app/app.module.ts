@@ -42,9 +42,9 @@ import { DashboardMainAdminComponent } from './components/dashboard/admin/main/m
 import { CourseCreateComponent } from './components/dashboard/admin/course-create/course-create.component';
 import { CourseOverviewAdminComponent } from './components/dashboard/admin/course-overview/course-overview.component';
 
-import { FormLectureComponent } from './dashboard/course-overview/form-lecture/form-lecture.component';
-import { FormSectionComponent } from './dashboard/course-overview/form-section/form-section.component';
-import { FormCommentComponent } from './dashboard/course-overview/form-comment/form-comment.component';
+import { FormLectureComponent } from './components/dashboard/admin/course-overview/form-lecture/form-lecture.component';
+import { FormSectionComponent } from './components/dashboard/admin/course-overview/form-section/form-section.component';
+import { FormCommentComponent } from './components/dashboard/admin/course-overview/form-comment/form-comment.component';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';

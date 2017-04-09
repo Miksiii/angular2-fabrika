@@ -7,6 +7,13 @@ import {
   AngularFire, 
   FirebaseObjectObservable
 } from 'angularfire2';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition
+} from '@angular/animations';
 
 // Custom components
 import { CourseService } from './../../../services/course.service';
@@ -23,7 +30,6 @@ export class CourseDetailComponent implements OnInit {
   courseKey : any;
   courses : any;
   currentUser;
-  clicked = 'off';
 
   constructor(
     private route : ActivatedRoute,
@@ -34,6 +40,16 @@ export class CourseDetailComponent implements OnInit {
 
   ngOnInit() {
 
+    this.route.params.
+      switchMap((params : Params) => 
+        this.courseService.getCourseByKey(params['key'])).
+          subscribe(foo => {
+            foo.subscribe(course => {
+              this.course = course;       
+              console.log(this.course);
+            })
+          });
+          
     this.af.auth.subscribe(
       auth => {
         if(auth) {
@@ -45,14 +61,6 @@ export class CourseDetailComponent implements OnInit {
       }
     );
 
-    this.route.params.
-      switchMap((params : Params) => 
-        this.course = this.courseService.getCourseByKey(params['key'])).
-          subscribe(foo => {
-            foo.subscribe(course => {
-              this.course = course;
-            })
-          });
   }
 
   addCourse(courseKey) {
@@ -66,7 +74,6 @@ export class CourseDetailComponent implements OnInit {
   }
 
   addCourseToWishList(courseKey) {
-    this.clicked = 'off';
 
     if(this.currentUser) {  
       this.courseService.addCourseToWishList(this.currentUser.$key, courseKey);

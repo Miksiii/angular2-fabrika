@@ -53,16 +53,11 @@
         </div>  
       </div>       
 
-      <!-- price -->
+      <!-- thumbnail -->
       <div class="form-group">
         <label for="thumbnail">Thumbnail:</label>
-        <input type="text" name="thumbnail" id="thumbnail" class="form-control" required 
-          [(ngModel)]="course.thumbnail" #thumbnailRef="ngModel">
-        
-        <div class="alert alert-danger" 
-           [hidden]="thumbnailRef.valid || thumbnailRef.pristine">
-          Thumbnail is a must!
-        </div>  
+        <input type="file" name="thumbnail" id="thumbnail" class="form-control" 
+          (change)="fileAttached($event)">
       </div>   
 
       <div class="form-group">

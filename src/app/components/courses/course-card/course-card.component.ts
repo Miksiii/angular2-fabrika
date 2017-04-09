@@ -23,9 +23,14 @@ export class CourseCardComponent implements OnInit {
     private router : Router,
     private af : AngularFire,
     private courseService : CourseService
-  ) { }
+  ) {}
 
   ngOnInit() {
+
+    this.courseService.getThumbnailDownloadableURL(this.course)
+      .then(thumbnailDownloadableURL => {
+        this.course.thumbnail = thumbnailDownloadableURL;
+      })
 
     this.af.auth.subscribe(
       auth => {

@@ -1,7 +1,10 @@
 import 'rxjs/add/operator/take'
+import { ElementRef } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import * as firebase from 'firebase';
+
 import { 
   AngularFire, 
   FirebaseListObservable, 
@@ -86,10 +89,32 @@ export class CourseService {
       excerpt: course.excerpt,
       description: course.description,
       price: course.price, 
-      thumbnail: course.thumbnail
-    });
-    this.router.navigate(['course', newCourse.key, 'overview']);
+      thumbnail: course.thumbnail.name
+    })
+    
+    this.uploadCourseThumbnail(course.thumbnail, newCourse.key);
   }
+
+  // https://github.com/jlmonteagudo/upload-firebase
+  // http://stackoverflow.com/questions/39173265/angular-2-change-for-file-upload
+  uploadCourseThumbnail(thumbnail : any, courseKey) {
+    let storageRef = firebase.storage().ref();
+    let path = `courses/${courseKey}/thumbnails/${thumbnail.name}`;
+
+    storageRef.child(path)
+      .put(thumbnail)
+      .then((snapshot) => {
+        this.router.navigate(['/admin/dashboard/course', courseKey, 'overview']);
+      });
+  }  
+
+  getThumbnailDownloadableURL(course : any) : Promise<any> {
+    let pathToThumbnail = `courses/${course.$key}/thumbnails/${course.thumbnail}`;
+    let storageRef = firebase.storage().ref()
+                      .child(pathToThumbnail);
+
+    return Promise.resolve(storageRef.getDownloadURL());
+  }  
 
   createLecture(courseKey, title) {
     this.af.database.list(`lectures/${courseKey}`).push({
@@ -135,5 +160,7 @@ export class CourseService {
       locked: lock
     });
   }
+
+
 
 }

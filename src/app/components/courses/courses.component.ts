@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import * as firebase from 'firebase';
 
 // Custom components
 import { CourseService } from './../../services/course.service';
