@@ -15,6 +15,7 @@ import {
 export class CourseService {
 
   courses : Observable<any[]>;
+  users : Observable<any[]>;
   course : FirebaseObjectObservable<any>;
   coursesWishList : string[];
   myCoursesList : string[];  
@@ -48,9 +49,6 @@ export class CourseService {
     return Promise.resolve(this.af.database.list(`sections/${key}`));
   }
 
-  getCommentsOfCourseSection(courseKey : string, sectionKey) : Promise<FirebaseListObservable<any[]>> {
-    return Promise.resolve(this.af.database.list(`comments/${courseKey}/${sectionKey}`));
-  }
 
   getWishListOfUserWithID(userID) : Promise<FirebaseListObservable<any[]>> {
     return Promise.resolve(this.af.database.list('/courses', {
@@ -129,24 +127,16 @@ export class CourseService {
     });
   }
 
-  createComment(courseKey, sectionKey, comment) {
-    this.af.database.list(`comments/${courseKey}/${sectionKey}`).push({
-      username: comment.username,
-      body: comment.body,
-      date: comment.date
-    });
-  }
-
-  getCommentsByCourse(courseKey) {
-    return Promise.resolve(this.af.database.list(`comments/${courseKey}`));
-  }
-
   //shopping cart!
   addCourse(userUID, courseKey) {
+    console.log("called from add course!)");
     this.af.database.object(`/courses/${courseKey}/belongs_to/${userUID}`).set({
       uid: userUID,
       locked: true
-    });    
+    });
+    this.af.database.object(`/users/${userUID}/courses/${courseKey}`).set({
+      locked: true
+    });        
   }
 
   addCourseToWishList(userKey, courseKey) {
@@ -161,6 +151,16 @@ export class CourseService {
     });
   }
 
+  editLectureTitle(lectureKey, courseKey, newTitle) {
+    this.af.database.object(`/lectures/${courseKey}/${lectureKey}`).update({
+      title: newTitle
+    });    
+  }
 
+  editSectionTitle(sectionKey, lectureKey, newTitle) {
+    this.af.database.object(`/sections/${lectureKey}/${sectionKey}`).update({
+      title: newTitle
+    });    
+  }  
 
 }

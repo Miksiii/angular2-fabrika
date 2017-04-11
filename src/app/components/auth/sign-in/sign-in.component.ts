@@ -16,7 +16,7 @@ export class SignInComponent implements OnInit {
     email: '',
     password: ''
   };
-  errMessage : string; 
+  error : string; 
 
   constructor(
     private authService : AuthService,
@@ -40,6 +40,7 @@ export class SignInComponent implements OnInit {
       this.user.email,
       this.user.password
     );
+    this.error = this.authService.err;
   }
 
 }

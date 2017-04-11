@@ -18,6 +18,7 @@ import {
 // Custom components
 import { CourseService } from './../../../services/course.service';
 import { AuthService } from './../../../services/auth.service';
+import { LocalStorageService } from './../../../services/local-storage.service';
 
 @Component({
   selector: 'fa-course-detail',
@@ -35,18 +36,17 @@ export class CourseDetailComponent implements OnInit {
     private route : ActivatedRoute,
     private courseService : CourseService,
     private authService : AuthService,
+    private localStorageService : LocalStorageService,
     private af : AngularFire
   ) { }
 
   ngOnInit() {
-
     this.route.params.
       switchMap((params : Params) => 
         this.courseService.getCourseByKey(params['key'])).
           subscribe(foo => {
             foo.subscribe(course => {
               this.course = course;       
-              console.log(this.course);
             })
           });
           
@@ -60,7 +60,6 @@ export class CourseDetailComponent implements OnInit {
         }
       }
     );
-
   }
 
   addCourse(courseKey) {
@@ -74,13 +73,12 @@ export class CourseDetailComponent implements OnInit {
   }
 
   addCourseToWishList(courseKey) {
-
     if(this.currentUser) {  
       this.courseService.addCourseToWishList(this.currentUser.$key, courseKey);
-      return;
+    } else {
+      this.localStorageService.temporarySave(courseKey);
     }
-
-    this.courseService.coursesWishList.push(courseKey); 
+    
   }
 
 }

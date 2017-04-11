@@ -13,59 +13,111 @@ import { CourseOverviewUserComponent } from './components/dashboard/user/course-
 import { CourseOverviewAdminComponent } from './components/dashboard/admin/course-overview/course-overview.component';
 import { DashboardMainAdminComponent } from './components/dashboard/admin/main/main-admin.component';
 import { CourseCreateComponent } from './components/dashboard/admin/course-create/course-create.component';
+import { CommentsAdminComponent } from './components/dashboard/admin/comments/comments-admin.component';
+import { UsersAdminComponent } from './components/dashboard/admin/users/users-admin.component';
+import { AuthResolver } from './resolvers/auth.resolver';
 
 import { AuthGuard } from './services/auth-guard.service';
 
 export const ROUTES = [
   {
     path: 'browse',
-    component: CoursesComponent
+    component: CoursesComponent, 
+    resolve: {
+      auth: AuthResolver
+    }
   },
   {
     path: 'browse/course/:key',
-    component: CourseDetailComponent
+    component: CourseDetailComponent,
+    resolve: {
+      auth: AuthResolver
+    }
   },
   {
     path: 'dashboard/main',
     component: DashboardMainUserComponent, 
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    resolve: {
+      auth: AuthResolver
+    }    
   },
   {
     path: 'admin/dashboard/main',
     component: DashboardMainAdminComponent, 
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    resolve: {
+      auth: AuthResolver
+    }    
   },  
   {
     path: 'dashboard/wishlist',
     component: WishlistComponent, 
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    resolve: {
+      auth: AuthResolver
+    }    
   },  
   {
     path: '',
-    redirectTo: 'courses',
-    pathMatch: 'full'
+    redirectTo: 'browse',
+    pathMatch: 'full',
+    resolve: {
+      auth: AuthResolver
+    }    
   },
   {
     path: 'dashboard/course/:key/overview',
     component: CourseOverviewUserComponent, 
-    canActivate: [AuthGuard]
-  },  
+    canActivate: [AuthGuard],
+    resolve: {
+      auth: AuthResolver
+    }    
+  },
+  {
+    path: 'admin/dashboard/course/:key/comments',
+    component: CommentsAdminComponent, 
+    canActivate: [AuthGuard],
+    resolve: {
+      auth: AuthResolver
+    }    
+  },      
+  {
+    path: 'admin/dashboard/course/:key/users',
+    component: UsersAdminComponent, 
+    canActivate: [AuthGuard],
+    resolve: {
+      auth: AuthResolver
+    }    
+  },
   {
     path: 'admin/dashboard/course/:key/overview',
     component: CourseOverviewAdminComponent, 
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    resolve: {
+      auth: AuthResolver
+    }   
   },    
   {
     path: 'admin/dashboard/course/create',
-    component: CourseCreateComponent
+    component: CourseCreateComponent,
+    resolve: {
+      auth: AuthResolver
+    }    
   },
   {
     path: 'signin',
-    component: SignInComponent
+    component: SignInComponent,
+    resolve: {
+      auth: AuthResolver
+    }    
   },
   {
     path: 'signup',
-    component: SignUpComponent
+    component: SignUpComponent,
+    resolve: {
+      auth: AuthResolver
+    }    
   },
 ];
 

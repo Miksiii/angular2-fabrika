@@ -74,7 +74,8 @@
     <div *ngIf="!sectionActive && sectionActive !== null" class="fa-course-overview-content-wellcome">
       <h1>{{course?.title}}</h1>
       <h2>{{course?.excerpt}}</h2>
-      <button class="fa-course-overview-content-wellcome-btn-start">
+      <button class="fa-course-overview-content-wellcome-btn-start"
+        (click)="start()">
         CONTINUE 
       </button>
     </div>

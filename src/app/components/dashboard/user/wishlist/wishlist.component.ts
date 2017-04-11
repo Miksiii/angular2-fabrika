@@ -35,7 +35,6 @@ export class WishlistComponent implements OnInit {
               this.courseService.getWishListOfUserWithID(this.currentUser.$key)
                 .then(courses => {
                   this.courses = courses;
-                  console.log(this.courses);  
                 });
             }));
         } else {

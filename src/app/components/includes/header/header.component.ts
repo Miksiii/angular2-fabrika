@@ -3,6 +3,8 @@ import { AngularFire } from 'angularfire2';
 
 // Custom components
 import { AuthService } from './../../../services/auth.service';
+import { CourseService } from './../../../services/course.service';
+import { LocalStorageService } from './../../../services/local-storage.service';
 
 @Component({
   selector: 'fa-header',
@@ -12,9 +14,12 @@ import { AuthService } from './../../../services/auth.service';
 export class HeaderComponent implements OnInit {
 
   currentUser : any = null;
+  wishlistSize : number;
 
   constructor(
     private authService : AuthService,
+    private courseService : CourseService,
+    private localStorageService : LocalStorageService,
     private af : AngularFire,
   ) {
     this.af.auth.subscribe(
@@ -32,6 +37,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+
   }
 
   signout() : void {

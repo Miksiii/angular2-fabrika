@@ -18,6 +18,9 @@ export const firebaseConfig = {
 import { CourseService} from './services/course.service';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/auth-guard.service';
+import { LocalStorageService } from './services/local-storage.service';
+import { UserService } from './services/user.service';
+import { CommentService } from './services/comment.service';
 
 // Components/Includes 
 import { HeaderComponent } from './components/includes/header/header.component';
@@ -41,6 +44,8 @@ import { CourseOverviewUserComponent } from './components/dashboard/user/course-
 import { DashboardMainAdminComponent } from './components/dashboard/admin/main/main-admin.component';
 import { CourseCreateComponent } from './components/dashboard/admin/course-create/course-create.component';
 import { CourseOverviewAdminComponent } from './components/dashboard/admin/course-overview/course-overview.component';
+import { CommentsAdminComponent } from './components/dashboard/admin/comments/comments-admin.component';
+import { UsersAdminComponent } from './components/dashboard/admin/users/users-admin.component';
 
 import { FormLectureComponent } from './components/dashboard/admin/course-overview/form-lecture/form-lecture.component';
 import { FormSectionComponent } from './components/dashboard/admin/course-overview/form-section/form-section.component';
@@ -49,6 +54,7 @@ import { FormCommentComponent } from './components/dashboard/admin/course-overvi
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SubSetPipe } from './pipes/subset-pipe.pipe';
+import { AuthResolver } from './resolvers/auth.resolver';
 
 @NgModule({
   declarations: [
@@ -69,7 +75,9 @@ import { SubSetPipe } from './pipes/subset-pipe.pipe';
     FormSectionComponent,
     FormCommentComponent,
     WishlistComponent,
-    SubSetPipe
+    SubSetPipe,
+    CommentsAdminComponent,
+    UsersAdminComponent
   ],
   imports: [
     BrowserModule,
@@ -81,7 +89,11 @@ import { SubSetPipe } from './pipes/subset-pipe.pipe';
   providers: [
     CourseService, 
     AuthService,
-    AuthGuard
+    AuthGuard,
+    LocalStorageService,
+    UserService,
+    CommentService,
+    AuthResolver
   ],
   bootstrap: [AppComponent]
 })

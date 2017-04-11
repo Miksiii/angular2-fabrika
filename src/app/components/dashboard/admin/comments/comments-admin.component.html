@@ -1,0 +1,14 @@
+<h2>
+  comments works! {{course?.title}}
+</h2>
+
+<ul>
+  <li *ngFor="let comment of course?.comments">
+    <ul>
+      <li *ngFor="let section of comment | subsetpipe" class="alert alert-info">
+        <p>{{section.value.username}}</p>
+        <p>{{section.value.body}}</p>
+      </li>
+    </ul>
+  </li>
+</ul>

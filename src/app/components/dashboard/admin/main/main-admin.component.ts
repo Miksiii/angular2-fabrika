@@ -9,6 +9,7 @@ import {
 // Custom components
 import { AuthService } from './../../../../services/auth.service';
 import { CourseService } from './../../../../services/course.service';
+import { CommentService } from './../../../../services/comment.service';
 
 @Component({
   selector: 'app-main-admin',
@@ -24,6 +25,7 @@ export class DashboardMainAdminComponent implements OnInit {
     private authService : AuthService,
     private af : AngularFire,
     private courseService : CourseService,
+    private commentService : CommentService,
     private router : Router
   ) {
     this.af.auth.subscribe(
@@ -39,9 +41,9 @@ export class DashboardMainAdminComponent implements OnInit {
                   // Get count of comments & students per course and bind the value
                   // to the single course (course.numberOfComments property)
                   for(let i = 0; i < this.courses.length; i++) {
-                    this.courseService.getCommentsByCourse(this.courses[i].$key)
-                      .then(foo => foo.subscribe(comments => {
-                        this.courses[i].numberOfComments = comments.length;
+                    this.commentService.getCourseComments(this.courses[i].$key)
+                      .then(foo => foo.subscribe(snapshot => {
+                        this.courses[i].numberOfComments = snapshot.length;
                       }));
                     
                     this.courses[i].numberOfStudents = this.getObjectLength(this.courses[i].belongs_to);

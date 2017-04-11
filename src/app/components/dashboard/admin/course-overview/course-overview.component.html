@@ -14,7 +14,13 @@
         *ngFor="let lecture of course?.lectures">
         <i class="fa fa-address-card-o" aria-hidden="true"></i>
         <a>
-          {{lecture?.title}}
+          <input type="text" 
+            [value]="lecture?.title" 
+            [disabled]="editID !== lecture?.$key"
+            (keypress)="editLectureTitle($event, lecture?.$key)"
+            >
+          <i class="fa fa-pencil" aria-hidden="true" 
+            (click)="editID = lecture?.$key"></i>
         </a>
 
         <!-- sections -->
@@ -22,10 +28,16 @@
 
           <!-- single section -->
           <li class="fa-course-overview-affix-ul-lectures-lecture-sections-section" 
-            *ngFor="let section of lecture?.sections"
-            (click)="show(section)">
+            *ngFor="let section of lecture?.sections">
             <i class="fa fa-caret-square-o-right" aria-hidden="true"></i>
-            <a>{{section.title}}</a>
+            <a>
+              <input type="text" 
+                [value]="section?.title" 
+                [disabled]="editID !== section?.$key"
+                (keypress)="editSectionTitle($event, section?.$key, lecture?.$key)">
+              <i class="fa fa-pencil" aria-hidden="true" 
+                (click)="editID = section?.$key"></i>
+            </a>
           </li> <!-- single section ends -->
 
           <!-- admin options for section -->

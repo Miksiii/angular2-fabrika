@@ -11,55 +11,38 @@ import {
   AuthMethods 
 } from 'angularfire2';
 
+// Custom
+import { LocalStorageService } from './local-storage.service';
+import { CourseService } from './course.service';
+import { UserService } from './user.service';
 
 @Injectable()
 export class AuthService {
 
   isLoggedIn : boolean = false;
   redirectUrl : string;
-  courses : Observable<any>;
-  currentUser : any;
-  currentUserUID : string;
+  currentUser : any; // make it one page but if refresh call the method getuser(uid)
+  err : string;
 
   constructor(
     private af : AngularFire,
-    private router : Router
-  ) {}
+    private router : Router,
+    private courseService : CourseService,
+    private userService : UserService,
+    private localStorageService : LocalStorageService
+  ) {
+  }
 
-  createUser(email : string, password: string) : void {
+  createUser(email : string, password: string) {
     this.af.auth.createUser({
       email: email,
       password: password
-    })
-    .then(
-      (success) => {
-        this.createCustomUser(success.uid, "", email, password, true, [0]);
-        this.login(email, password);
-      }
-    )
-    .catch(
-      (error) => {
-        console.log("ERRAA" + error);
-      }
-    );
+    }).then(snapshot => {
+      this.userService.save(snapshot.uid, "", email, password, true);
+      this.login(email, password);
+    }).catch(error => this.err = error.message);
   }
 
-  // creates a new user with custom attributes:
-  // af.database.list('/users/UID')
-  createCustomUser(uid, username, email, password, isLoggedIn, courses) {
-    this.af.database.object('/users/' + uid).set({
-      uid: uid,
-      username: "",
-      email: email,
-      password: password,
-      isLoggedIn: isLoggedIn,
-      courses: courses,
-      role: 'user'
-    });
-  }
-
-  // login user with AuthMethod and set current user values to:
-  // this.currentUser
   login(email : string, password: string) : void {
     this.af.auth.login({
       email: email,
@@ -67,59 +50,50 @@ export class AuthService {
     }, {
       provider: AuthProviders.Password,
       method: AuthMethods.Password
-    })
-    .then(success => {
-      this.toggleAuth(success.uid, true);
-      this.getCurrentUser(success.uid)
-        .then(foo => foo.subscribe(user => {
-          this.currentUser = user;
-          //let redirect = this.redirectUrl ? this.redirectUrl : '/dashboard/main';
+    }).then(snapshot => {
+
+      this.userService.getUserByKey(snapshot.uid)
+        .then(foo => foo.subscribe(snapshot => {
+          this.currentUser = snapshot;
+          this.localStorageService.onUserLoginSave(this.currentUser.$key); 
+          this.toggleLogin(true, this.currentUser.$key);
 
           if(this.currentUser.role === 'admin') {
             this.router.navigate(['admin/dashboard/main']);
-            return;
+          } else {
+            this.router.navigate(['/dashboard/main']);
           }
-
-          this.router.navigate(['/dashboard/main']);
-
         }))
-    })
-    .catch(error => {
-      console.log(error.message);
+
+
+    }).catch(error => {
+      this.err = error.message; 
     });
   }
 
-  toggleAuth(uid : string, isLoggedIn : boolean) {
-    this.isLoggedIn = isLoggedIn;
-    this.af.database.object(`users/${uid}`)
-     .update({isLoggedIn: isLoggedIn})
-     .then(user => this.currentUser = user);
+  toggleLogin(loginValue, userKey : string) {
+    this.currentUser.isLoggedIn = loginValue;
+
+    this.af.database.object(`users/${userKey}`).update({
+      isLoggedIn: this.currentUser.isLoggedIn 
+    });
   }
 
-  // regards this we find out whether the auth-guard
-  // should redirect if no access
   isAuthenticated() : boolean {
     let isAuthenticated = false;
 
-    this.af.auth.subscribe(
-      auth => {
-        if(auth) {
-          isAuthenticated = true;
-        } 
-      });
+    this.af.auth.subscribe(auth => { if(auth) { isAuthenticated = true; } });
 
    return isAuthenticated;
   }
 
-  getCurrentUser(uid : any) : Promise<FirebaseObjectObservable<any>>{
-    return Promise.resolve(this.af.database.object(`users/${uid}`));
+  signout(userKey : string) {
+    this.af.auth.logout();
+    this.toggleLogin(false, userKey);
   }
 
-  signout(uid : string) : void {
-    this.currentUser = null;
-    this.toggleAuth(uid, false);
-    this.af.auth.logout();
-    this.router.navigate(['browse']);
+  getCurrentUser(uid : any) : Promise<FirebaseObjectObservable<any>>{
+    return Promise.resolve(this.af.database.object(`users/${uid}`));
   }
 
 }

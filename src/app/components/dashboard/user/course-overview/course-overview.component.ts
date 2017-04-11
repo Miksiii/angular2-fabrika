@@ -49,7 +49,6 @@ export class CourseOverviewUserComponent implements OnInit {
             .then(foo => foo.subscribe(user => {
               this.currentUser = user;
             }));
-          // this.currentUser = this.authService.getCurrentUser(auth.uid);
         }
       }
     );
@@ -83,6 +82,11 @@ export class CourseOverviewUserComponent implements OnInit {
                 });
             })
           });
+  }
+
+  start() {
+    // sectionActive equal to some section
+    this.show(this.course.lectures[0].sections[0]);
   }
 
   show(section) : void {

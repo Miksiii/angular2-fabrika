@@ -1,4 +1,5 @@
 import { Injectable }     from '@angular/core';
+import { Location }       from '@angular/common';
 import {
   CanActivate, Router,
   ActivatedRouteSnapshot,
@@ -13,10 +14,14 @@ export class AuthGuard implements CanActivate {
   constructor(
     private authService: AuthService, 
     private router: Router,
-    private af : AngularFire
-  ) {}
+    private af : AngularFire,
+    private location : Location
+  ) {
+
+  }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    console.log(this.authService.currentUser);
     return this.checkLogin(state.url);
   }
 

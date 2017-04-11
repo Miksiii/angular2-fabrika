@@ -1,11 +1,21 @@
 <div class="col-md-12">
   <ul>
     <li *ngFor="let course of courses">
+      Title: 
+      <a [routerLink]="['/admin/dashboard/course/', course?.$key, 'overview']"> 
+        {{course?.title}}
+      </a> <br/>
 
-      Title: <a [routerLink]="['/admin/dashboard/course/', course?.$key, 'overview']"> {{course?.title}}</a> <br/>
-      Comments: {{course?.numberOfComments}}
-      Students: {{course?.numberOfStudents}}
-      <ul>
+      Comments: 
+      <a [routerLink]="['/admin/dashboard/course/', course?.$key, 'comments']">
+        {{course?.numberOfComments}}
+      </a> <br/>
+
+      Students: 
+      <a [routerLink]="['/admin/dashboard/course/', course?.$key, 'users']">
+        {{course?.numberOfStudents}}
+      </a>
+    <ul>
         <li *ngFor="let student of course?.belongs_to | subsetpipe">
           #UID: {{student.value.uid}} wants to start with your course!
           <button 

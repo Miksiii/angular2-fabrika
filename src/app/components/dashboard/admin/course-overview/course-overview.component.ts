@@ -30,6 +30,7 @@ export class CourseOverviewAdminComponent implements OnInit {
   lectures : FirebaseListObservable<any[]>;
   sectionFormActive : boolean = false;
   lectureFormActive : boolean = false;
+  editID : string = '';
 
   lectureKey;
   courseKey;
@@ -89,7 +90,10 @@ export class CourseOverviewAdminComponent implements OnInit {
           });
   }
 
-  show(section) : void {
+  show(section) {
+    console.log("called!");
+    this.editID = ""; // remove edit label
+
     this.sectionFormActive = false;
     this.sectionActive = section;
     let dangerousVideoUrl = 'https://www.youtube.com/embed/' + section.videoId;
@@ -101,6 +105,8 @@ export class CourseOverviewAdminComponent implements OnInit {
   }
 
   displayFormSection(lectureKey) {
+    this.editID = ""; // hide edit fields 
+
     this.lectureKey = lectureKey;
     this.sectionActive = null; 
     this.lectureFormActive = false;
@@ -108,11 +114,27 @@ export class CourseOverviewAdminComponent implements OnInit {
   }
 
   displayFormLecture(courseKey) {
+    this.editID = ""; // hide edit fields 
+
     this.courseKey = courseKey;
     this.sectionActive = null;
     this.sectionFormActive = false; 
     this.lectureFormActive = true; 
   }
+
+  editLectureTitle(event, lectureKey) {
+    if(event.keyCode === 13) {
+      this.courseService.editLectureTitle(lectureKey, this.course.$key, event.target.value);
+      this.editID = ""; 
+    }
+  }
+
+  editSectionTitle(event, sectionKey, lectureKey) {
+    if(event.keyCode === 13) {
+      this.courseService.editSectionTitle(sectionKey, lectureKey, event.target.value);
+      this.editID = ""; 
+    }
+  }  
 
   back() {
     this.location.back();
