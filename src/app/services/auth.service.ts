@@ -57,6 +57,7 @@ export class AuthService {
           this.currentUser = snapshot;
           this.localStorageService.onUserLoginSave(this.currentUser.$key); 
           this.toggleLogin(true, this.currentUser.$key);
+          console.log("sad");
 
           if(this.currentUser.role === 'admin') {
             this.router.navigate(['admin/dashboard/main']);
@@ -65,17 +66,17 @@ export class AuthService {
           }
         }))
 
-
     }).catch(error => {
-      this.err = error.message; 
+      this.err = error.message;
     });
   }
 
-  toggleLogin(loginValue, userKey : string) {
-    this.currentUser.isLoggedIn = loginValue;
+  toggleLogin(loginValue : boolean, userKey : string) {
+
+    console.log("lvalue: " + loginValue + " key: " + userKey);
 
     this.af.database.object(`users/${userKey}`).update({
-      isLoggedIn: this.currentUser.isLoggedIn 
+      isLoggedIn: loginValue
     });
   }
 
@@ -88,8 +89,9 @@ export class AuthService {
   }
 
   signout(userKey : string) {
+    this.currentUser.isLoggedIn = false;
+    this.toggleLogin(false, this.currentUser.$key);
     this.af.auth.logout();
-    this.toggleLogin(false, userKey);
   }
 
   getCurrentUser(uid : any) : Promise<FirebaseObjectObservable<any>>{

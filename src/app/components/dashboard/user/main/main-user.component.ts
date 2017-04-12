@@ -26,6 +26,7 @@ export class DashboardMainUserComponent implements OnInit {
     private courseService : CourseService,
     private router : Router
   ) {
+    console.log(this.authService.currentUser);
     this.af.auth.subscribe(
       auth => {
         if(auth) {

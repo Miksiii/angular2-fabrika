@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFire } from 'angularfire2';
+import 'rxjs/add/operator/take';
 
 // Custom components
 import { AuthService } from './../../../services/auth.service';
@@ -16,7 +17,6 @@ export class SignInComponent implements OnInit {
     email: '',
     password: ''
   };
-  error : string; 
 
   constructor(
     private authService : AuthService,
@@ -35,12 +35,11 @@ export class SignInComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSignIn() {
+  signin() {
     this.authService.login(
       this.user.email,
       this.user.password
     );
-    this.error = this.authService.err;
   }
 
 }

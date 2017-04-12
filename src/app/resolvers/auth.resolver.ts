@@ -23,7 +23,6 @@ export class AuthResolver implements Resolve<any> {
   ) {}
 
   resolve(route : ActivatedRouteSnapshot, state : RouterStateSnapshot) {
-    console.log("callezino");
     this.af.auth.subscribe(auth => {
       if (auth) {
         if(!this.authService.currentUser) {
@@ -33,6 +32,6 @@ export class AuthResolver implements Resolve<any> {
             }));
         }
       }
-    })
+    });
   }
 }

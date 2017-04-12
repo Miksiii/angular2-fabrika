@@ -13,12 +13,10 @@ import { AuthService } from './../../../services/auth.service';
 
 export class SignUpComponent implements OnInit {
 
-  error : string; 
   user = {
     email: '',
     password: ''
   };
-
 
   constructor(
     private authService : AuthService,
@@ -36,11 +34,10 @@ export class SignUpComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSignUp() {
+  signup() {
     this.authService.createUser(
       this.user.email, this.user.password
     );
-    this.error = this.authService.err;
   }
 
 }
