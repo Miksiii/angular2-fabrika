@@ -14,14 +14,17 @@ import { LocalStorageService } from './../../../services/local-storage.service';
 export class HeaderComponent implements OnInit {
 
   currentUser : any = null;
-  wishlistSize : number;
+  wishlistCount : number;
+  courselistCount : number;
 
   constructor(
     private authService : AuthService,
     private courseService : CourseService,
     private localStorageService : LocalStorageService,
     private af : AngularFire,
-  ) {
+  ) { }
+
+  ngOnInit() {
     this.af.auth.subscribe(
       auth => {
         if(auth) {
@@ -29,14 +32,19 @@ export class HeaderComponent implements OnInit {
             .then(foo => foo.subscribe(user => {
               this.currentUser = user;
             }));
+          this.courseService.getWishListOfUserWithID(auth.uid)
+            .then(foo => foo.subscribe(snapshot => {
+              this.wishlistCount = snapshot.length;
+            }));
+          this.courseService.getCoursesOfUser(auth.uid)
+            .then(foo => foo.subscribe(snapshot => {
+              this.courselistCount = snapshot.length;
+            }));             
+         
         } else {
-           this.currentUser = null;
+          this.currentUser = null; // important cause mainmenu is based on this value
         }
-      }
-    );
-  }
-
-  ngOnInit() {
+      });  
   }
 
   signout() : void {

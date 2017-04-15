@@ -16,16 +16,13 @@ export class AuthGuard implements CanActivate {
     private router: Router,
     private af : AngularFire,
     private location : Location
-  ) {
-
-  }
+  ) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    console.log(state);
-    return this.checkLogin(state.url);
+    return this.checkForAuth(state.url);
   }
 
-  checkLogin(URLcall) {
+  checkForAuth(URLcall) {
     if(this.authService.isAuthenticated()) { 
       return true;
     }

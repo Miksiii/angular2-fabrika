@@ -41,9 +41,7 @@ export class DashboardMainUserComponent implements OnInit {
               }
 
             }));
-        } else {
-          this.router.navigate(['signin']);
-        }
+        } 
       }
     );
 

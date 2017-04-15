@@ -51,9 +51,7 @@ export class DashboardMainAdminComponent implements OnInit {
 
                 }));              
             }));
-        } else {
-          this.af.auth.logout();
-        }
+        } 
       }
     );
   }

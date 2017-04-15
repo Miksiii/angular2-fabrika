@@ -124,7 +124,6 @@ export class AuthService {
   signout() {
     this.toggleLogin(false, firebase.auth().currentUser.uid);
     this.af.auth.logout();
-    this.router.navigate(['signin']);;
   }
 
   /**
@@ -132,6 +131,13 @@ export class AuthService {
    */
   getCurrentUser() : Promise<FirebaseObjectObservable<any>>{
     return Promise.resolve(this.af.database.object(`users/${firebase.auth().currentUser.uid}`));
+  }
+
+  /**
+   * Returns the uid without a promise
+   */
+  getCurrentUserID() : string {
+    return firebase.auth().currentUser.uid;
   }
 
 }

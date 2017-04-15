@@ -59,8 +59,8 @@ export class CourseOverviewAdminComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.params.
-      switchMap((params : Params) => 
+    this.route.params
+      .switchMap((params : Params) => 
         this.courseService.getCourseByKey(params['key'])).
           subscribe(foo => {
             foo.subscribe(course => {
@@ -89,7 +89,6 @@ export class CourseOverviewAdminComponent implements OnInit {
   }
 
   show(section) {
-    console.log("called!");
     this.editID = ""; // remove edit label
 
     this.sectionFormActive = false;
@@ -98,6 +97,12 @@ export class CourseOverviewAdminComponent implements OnInit {
     this.videoUrl = this.sanitizeUrl(dangerousVideoUrl);
   }
 
+  /**
+   * The function sanitizes the dangerous video URL provided 
+   * by the client and returns a safe one.
+   * 
+   * @param videoURL 
+   */
   sanitizeUrl(videoURL : string) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(videoURL);
   }

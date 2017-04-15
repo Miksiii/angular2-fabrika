@@ -3,20 +3,23 @@
   <!-- courses of admin -->
   <div class="panel-group" id="accordion">
     <div class="panel panel-default"
-    *ngFor="let course of courses">
+    *ngFor="let course of courses; let $index = index">
       <div class="panel-heading">
         <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="course?.$key">
-          {{course?.title}} / </a>
+          <a data-toggle="collapse" data-parent="#accordion" [href]="'#' + course?.$key">
+          {{course?.title}} 
+          (<a [routerLink]="['/admin/dashboard/course/', course?.$key, 'overview']">View</a>)
+          </a> /
           <a [routerLink]="['/admin/dashboard/course/', course?.$key, 'comments']">
-            {{course?.numberOfComments}} Comments
+            <span class="badge">{{course?.numberOfComments}}</span>Comments
           </a> /
           <a [routerLink]="['/admin/dashboard/course/', course?.$key, 'users']">
-            {{course?.numberOfStudents}} Students
+            <span class="badge">{{course?.numberOfStudents}}</span>Students
           </a>
         </h4>
       </div>
-      <div id="course?.$key" class="panel-collapse collapse in">
+      <div id="{{course?.$key}}" class="panel-collapse"
+      [ngClass]="($index === 0) ? 'collapse in' : 'collapse out'">
         <div class="panel-body">
           <ul class="list-group">
             <li class="list-group-item" 
