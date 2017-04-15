@@ -10,6 +10,7 @@ import {
   AuthProviders, 
   AuthMethods 
 } from 'angularfire2';
+import * as firebase from 'firebase';
 
 // Custom
 import { LocalStorageService } from './local-storage.service';
@@ -19,9 +20,7 @@ import { UserService } from './user.service';
 @Injectable()
 export class AuthService {
 
-  isLoggedIn : boolean = false;
-  redirectUrl : string;
-  currentUser : any; // make it one page but if refresh call the method getuser(uid)
+  currentUser : any;
   err : string;
 
   constructor(
@@ -30,19 +29,36 @@ export class AuthService {
     private courseService : CourseService,
     private userService : UserService,
     private localStorageService : LocalStorageService
-  ) {
-  }
+  ) {}
 
+  /**
+   * The creation of new firebase user. In case of no errors then we 
+   * want to create a new custom user on /users node with the basic
+   * details. In case of errors we set an error message so we can 
+   * output it on the signup component. 
+   * 
+   * @param email 
+   * @param password 
+   */
   createUser(email : string, password: string) {
     this.af.auth.createUser({
       email: email,
       password: password
     }).then(snapshot => {
-      this.userService.save(snapshot.uid, "", email, password, true);
+      this.userService.save(snapshot.uid, "", email, password, false);
       this.login(email, password);
     }).catch(error => this.err = error.message);
   }
 
+  /**
+   * The firebase user authentication. In case of no errors then 
+   * get other details about the firebase user from /users node, 
+   * toggle isLoggedIn value, save wishlist from localstorage and 
+   * redirect user to the right place regards his role.
+   * 
+   * @param email 
+   * @param password 
+   */
   login(email : string, password: string) : void {
     this.af.auth.login({
       email: email,
@@ -51,51 +67,71 @@ export class AuthService {
       provider: AuthProviders.Password,
       method: AuthMethods.Password
     }).then(snapshot => {
-
-      this.userService.getUserByKey(snapshot.uid)
-        .then(foo => foo.subscribe(snapshot => {
+      this.af.database.object(`users/${firebase.auth().currentUser.uid}`)
+        .subscribe(snapshot => {
           this.currentUser = snapshot;
-          this.localStorageService.onUserLoginSave(this.currentUser.$key); 
           this.toggleLogin(true, this.currentUser.$key);
-          console.log("sad");
-
-          if(this.currentUser.role === 'admin') {
-            this.router.navigate(['admin/dashboard/main']);
-          } else {
-            this.router.navigate(['/dashboard/main']);
-          }
-        }))
-
+          this.localStorageService.onUserLoginSave(this.currentUser.$key); 
+          this.redirectUserByRole(this.currentUser.role);
+          this.err = '';
+        })
     }).catch(error => {
       this.err = error.message;
     });
   }
 
+  /**
+   * Redirects user to the right place after login regards role.
+   * 
+   * @param role 
+   */
+  redirectUserByRole(role : string) {
+    switch(role) {
+      case "admin":
+        this.router.navigate(['admin/dashboard/main']);
+        break;
+      case "user":
+        this.router.navigate(['dashboard/main']);
+        break;
+    }
+  }
+
+  /**
+   * Toggle login value (isLoggedIn) from the /users/user node
+   * 
+   * @param loginValue 
+   * @param userKey 
+   */
   toggleLogin(loginValue : boolean, userKey : string) {
-
-    console.log("lvalue: " + loginValue + " key: " + userKey);
-
     this.af.database.object(`users/${userKey}`).update({
       isLoggedIn: loginValue
     });
   }
 
+  /**
+   * Returns boolean value on whether the user is logged in or not. 
+   * This method is being used in auth-guard service to protect the
+   * routes.
+   */
   isAuthenticated() : boolean {
-    let isAuthenticated = false;
-
-    this.af.auth.subscribe(auth => { if(auth) { isAuthenticated = true; } });
-
-   return isAuthenticated;
+    return (firebase.auth().currentUser !== null) ? true : false;
   }
 
-  signout(userKey : string) {
-    this.currentUser.isLoggedIn = false;
-    this.toggleLogin(false, this.currentUser.$key);
+  /**
+   * Toggle the login value (isLoggedIn) on /users/user node and 
+   * destroy the login session from the local storage.
+   */
+  signout() {
+    this.toggleLogin(false, firebase.auth().currentUser.uid);
     this.af.auth.logout();
+    this.router.navigate(['signin']);;
   }
 
-  getCurrentUser(uid : any) : Promise<FirebaseObjectObservable<any>>{
-    return Promise.resolve(this.af.database.object(`users/${uid}`));
+  /**
+   * Returns the currently active user
+   */
+  getCurrentUser() : Promise<FirebaseObjectObservable<any>>{
+    return Promise.resolve(this.af.database.object(`users/${firebase.auth().currentUser.uid}`));
   }
 
 }

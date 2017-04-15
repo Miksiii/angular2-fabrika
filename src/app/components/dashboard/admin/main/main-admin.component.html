@@ -1,33 +1,37 @@
-<div class="col-md-12">
-  <ul>
-    <li *ngFor="let course of courses">
-      Title: 
-      <a [routerLink]="['/admin/dashboard/course/', course?.$key, 'overview']"> 
-        {{course?.title}}
-      </a> <br/>
+<div class="col-md-6">
 
-      Comments: 
-      <a [routerLink]="['/admin/dashboard/course/', course?.$key, 'comments']">
-        {{course?.numberOfComments}}
-      </a> <br/>
-
-      Students: 
-      <a [routerLink]="['/admin/dashboard/course/', course?.$key, 'users']">
-        {{course?.numberOfStudents}}
-      </a>
-    <ul>
-        <li *ngFor="let student of course?.belongs_to | subsetpipe">
-          #UID: {{student.value.uid}} wants to start with your course!
-          <button 
-            [ngClass]="(student.value.locked) ? 'btn btn-success' : 'btn btn-danger'"
-            (click)="toggleLock(course?.$key, student.value.uid, student.value.locked)">
-            {{(student.value.locked) ? "UNLOCK" : "LOCK"}}
-          </button>
-        </li>
-      </ul>
-
-      <hr>
-    </li>
-  </ul>
+  <!-- courses of admin -->
+  <div class="panel-group" id="accordion">
+    <div class="panel panel-default"
+    *ngFor="let course of courses">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="course?.$key">
+          {{course?.title}} / </a>
+          <a [routerLink]="['/admin/dashboard/course/', course?.$key, 'comments']">
+            {{course?.numberOfComments}} Comments
+          </a> /
+          <a [routerLink]="['/admin/dashboard/course/', course?.$key, 'users']">
+            {{course?.numberOfStudents}} Students
+          </a>
+        </h4>
+      </div>
+      <div id="course?.$key" class="panel-collapse collapse in">
+        <div class="panel-body">
+          <ul class="list-group">
+            <li class="list-group-item" 
+            *ngFor="let student of course?.belongs_to | subsetpipe">
+              <button 
+                [ngClass]="(student.value.locked) ? 'btn btn-success' : 'btn btn-danger'"
+                (click)="toggleLock(course?.$key, student.value.uid, student.value.locked)">
+                #UID: {{student.value.uid}} 
+                {{(student.value.locked) ? "UNLOCK" : "LOCK"}}
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </div>

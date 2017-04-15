@@ -53,7 +53,7 @@ export class CourseDetailComponent implements OnInit {
     this.af.auth.subscribe(
       auth => {
         if(auth) {
-          this.authService.getCurrentUser(auth.uid)
+          this.authService.getCurrentUser()
             .then(foo => foo.subscribe(user => {
               this.currentUser = user;
             }));

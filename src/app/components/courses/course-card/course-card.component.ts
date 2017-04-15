@@ -4,6 +4,7 @@ import { AngularFire } from 'angularfire2';
 
 // Custom components 
 import { CourseService } from './../../../services/course.service';
+import { FileUploadService } from './../../../services/file-upload.service';
 
 @Component({
   selector: 'fa-course-card',
@@ -22,12 +23,13 @@ export class CourseCardComponent implements OnInit {
   constructor(
     private router : Router,
     private af : AngularFire,
+    private fileUploadService : FileUploadService,
     private courseService : CourseService
   ) {}
 
   ngOnInit() {
 
-    this.courseService.getThumbnailDownloadableURL(this.course)
+    this.fileUploadService.getThumbnailDownloadableURL(this.course)
       .then(thumbnailDownloadableURL => {
         this.course.thumbnail = thumbnailDownloadableURL;
       })

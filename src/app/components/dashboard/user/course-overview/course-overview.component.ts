@@ -45,7 +45,7 @@ export class CourseOverviewUserComponent implements OnInit {
 
         // if auth is set but no local object then fetch the data 
         if(auth) {
-          this.authService.getCurrentUser(auth.uid)
+          this.authService.getCurrentUser()
             .then(foo => foo.subscribe(user => {
               this.currentUser = user;
             }));

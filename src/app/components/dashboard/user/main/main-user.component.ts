@@ -26,11 +26,10 @@ export class DashboardMainUserComponent implements OnInit {
     private courseService : CourseService,
     private router : Router
   ) {
-    console.log(this.authService.currentUser);
     this.af.auth.subscribe(
       auth => {
         if(auth) {
-          this.authService.getCurrentUser(auth.uid)
+          this.authService.getCurrentUser()
             .then(foo => foo.subscribe(user => {
               this.currentUser = user;
 
@@ -42,6 +41,8 @@ export class DashboardMainUserComponent implements OnInit {
               }
 
             }));
+        } else {
+          this.router.navigate(['signin']);
         }
       }
     );

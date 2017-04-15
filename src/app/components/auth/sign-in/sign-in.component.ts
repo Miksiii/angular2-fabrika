@@ -26,7 +26,7 @@ export class SignInComponent implements OnInit {
     this.af.auth.subscribe(
       auth => {
         if (auth) {
-          this.router.navigateByUrl('/dashboard/main');
+          //this.router.navigateByUrl('/dashboard/main');
         }
       }
     );

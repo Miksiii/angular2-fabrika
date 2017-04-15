@@ -21,6 +21,7 @@ import { AuthGuard } from './services/auth-guard.service';
 import { LocalStorageService } from './services/local-storage.service';
 import { UserService } from './services/user.service';
 import { CommentService } from './services/comment.service';
+import { FileUploadService } from './services/file-upload.service';
 
 // Components/Includes 
 import { HeaderComponent } from './components/includes/header/header.component';
@@ -93,7 +94,8 @@ import { AuthResolver } from './resolvers/auth.resolver';
     LocalStorageService,
     UserService,
     CommentService,
-    AuthResolver
+    AuthResolver,
+    FileUploadService
   ],
   bootstrap: [AppComponent]
 })

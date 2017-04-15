@@ -23,9 +23,9 @@ export class HeaderComponent implements OnInit {
     private af : AngularFire,
   ) {
     this.af.auth.subscribe(
-      isAuthenticated => {
-        if(isAuthenticated) {
-          this.authService.getCurrentUser(isAuthenticated.uid)
+      auth => {
+        if(auth) {
+          this.authService.getCurrentUser()
             .then(foo => foo.subscribe(user => {
               this.currentUser = user;
             }));
@@ -37,11 +37,10 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-
   }
 
   signout() : void {
-    this.authService.signout(this.currentUser.uid);
+    this.authService.signout();
   }
 
 }

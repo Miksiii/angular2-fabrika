@@ -3,13 +3,15 @@ import { ElementRef } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import * as firebase from 'firebase';
 
 import { 
   AngularFire, 
   FirebaseListObservable, 
   FirebaseObjectObservable 
 } from 'angularfire2';
+
+// Custom 
+import { FileUploadService } from './file-upload.service';
 
 @Injectable()
 export class CourseService {
@@ -22,12 +24,9 @@ export class CourseService {
 
   constructor(
     private af : AngularFire,
+    private fileUploadService : FileUploadService,
     private router : Router
-  ) {
-    this.coursesWishList = [];
-    this.myCoursesList = [];    
-    this.courses = this.af.database.list('/courses');
-  }
+  ) { }
 
   getCourses() : Promise<FirebaseListObservable<any[]>> {
     return Promise.resolve(this.af.database.list('/courses'));
@@ -48,7 +47,6 @@ export class CourseService {
   getSectionsByLectureKey(key : string) : Promise<FirebaseListObservable<any[]>> {
     return Promise.resolve(this.af.database.list(`sections/${key}`));
   }
-
 
   getWishListOfUserWithID(userID) : Promise<FirebaseListObservable<any[]>> {
     return Promise.resolve(this.af.database.list('/courses', {
@@ -90,29 +88,8 @@ export class CourseService {
       thumbnail: course.thumbnail.name
     })
     
-    this.uploadCourseThumbnail(course.thumbnail, newCourse.key);
+    this.fileUploadService.uploadCourseThumbnail(course.thumbnail, newCourse.key);
   }
-
-  // https://github.com/jlmonteagudo/upload-firebase
-  // http://stackoverflow.com/questions/39173265/angular-2-change-for-file-upload
-  uploadCourseThumbnail(thumbnail : any, courseKey) {
-    let storageRef = firebase.storage().ref();
-    let path = `courses/${courseKey}/thumbnails/${thumbnail.name}`;
-
-    storageRef.child(path)
-      .put(thumbnail)
-      .then((snapshot) => {
-        this.router.navigate(['/admin/dashboard/course', courseKey, 'overview']);
-      });
-  }  
-
-  getThumbnailDownloadableURL(course : any) : Promise<any> {
-    let pathToThumbnail = `courses/${course.$key}/thumbnails/${course.thumbnail}`;
-    let storageRef = firebase.storage().ref()
-                      .child(pathToThumbnail);
-
-    return Promise.resolve(storageRef.getDownloadURL());
-  }  
 
   createLecture(courseKey, title) {
     this.af.database.list(`lectures/${courseKey}`).push({
@@ -127,9 +104,7 @@ export class CourseService {
     });
   }
 
-  //shopping cart!
   addCourse(userUID, courseKey) {
-    console.log("called from add course!)");
     this.af.database.object(`/courses/${courseKey}/belongs_to/${userUID}`).set({
       uid: userUID,
       locked: true

@@ -48,13 +48,11 @@ export class CourseOverviewAdminComponent implements OnInit {
     this.af.auth.subscribe(
       auth => {
 
-        // if auth is set but no local object then fetch the data 
         if(auth) {
-          this.authService.getCurrentUser(auth.uid)
+          this.authService.getCurrentUser()
             .then(foo => foo.subscribe(user => {
               this.currentUser = user;
             }));
-          // this.currentUser = this.authService.getCurrentUser(auth.uid);
         }
       }
     );
